@@ -38,6 +38,7 @@ public class Order_In_DetailDao extends AbstractDao<Order_In_Detail, Long> {
         public final static Property Uploaded = new Property(11, boolean.class, "uploaded", false, "UPLOADED");
         public final static Property Count = new Property(12, int.class, "count", false, "COUNT");
         public final static Property Remark = new Property(13, String.class, "remark", false, "REMARK");
+        public final static Property Asset_code = new Property(14, String.class, "asset_code", false, "ASSET_CODE");
     }
 
 
@@ -66,7 +67,9 @@ public class Order_In_DetailDao extends AbstractDao<Order_In_Detail, Long> {
                 "\"COMPLETED\" INTEGER NOT NULL ," + // 10: completed
                 "\"UPLOADED\" INTEGER NOT NULL ," + // 11: uploaded
                 "\"COUNT\" INTEGER NOT NULL ," + // 12: count
-                "\"REMARK\" TEXT);"); // 13: remark
+                "\"REMARK\" TEXT ," +      // 13: remark
+                "\"ASSET_CODE\"TEXT);");    //14:asset_code
+
         // Add Indexes
         db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_ORDER__IN__DETAIL__id_DESC ON \"ORDER__IN__DETAIL\"" +
                 " (\"_id\" DESC);");
@@ -119,6 +122,11 @@ public class Order_In_DetailDao extends AbstractDao<Order_In_Detail, Long> {
         if (remark != null) {
             stmt.bindString(14, remark);
         }
+
+        String asset_code = entity.getAsset_code();
+        if(asset_code!=null){
+            stmt.bindString(15,asset_code);
+        }
     }
 
     @Override
@@ -162,6 +170,12 @@ public class Order_In_DetailDao extends AbstractDao<Order_In_Detail, Long> {
         if (remark != null) {
             stmt.bindString(14, remark);
         }
+
+        String asset_code = entity.getAsset_code();
+        if(asset_code!=null){
+            stmt.bindString(15,asset_code);
+        }
+
     }
 
     @Override
@@ -185,7 +199,8 @@ public class Order_In_DetailDao extends AbstractDao<Order_In_Detail, Long> {
             cursor.getShort(offset + 10) != 0, // completed
             cursor.getShort(offset + 11) != 0, // uploaded
             cursor.getInt(offset + 12), // count
-            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13) // remark
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // remark
+                cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14) // remark
         );
         return entity;
     }
@@ -206,6 +221,7 @@ public class Order_In_DetailDao extends AbstractDao<Order_In_Detail, Long> {
         entity.setUploaded(cursor.getShort(offset + 11) != 0);
         entity.setCount(cursor.getInt(offset + 12));
         entity.setRemark(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
+        entity.setAsset_code(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
      }
     
     @Override

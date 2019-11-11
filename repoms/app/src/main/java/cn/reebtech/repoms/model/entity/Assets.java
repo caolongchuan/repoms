@@ -140,4 +140,12 @@ public String getRemark() {
 public void setRemark(String remark) {
     this.remark = remark;
 }
+
+    public String getAsset_code() {
+        return asset_code;
+    }
+
+    public void setAsset_code(String asset_code) {
+        this.asset_code = asset_code;
+    }
 }

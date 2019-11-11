@@ -80,6 +80,7 @@ public class OrderInModel implements OrderInContact.OrderInMdl {
                 ritem.setCount(1);
                 ritem.setCompleted(true);
                 ritem.setUploaded(false);
+                ritem.setAsset_code(item.getAsset_code());//clc资产编码
                 records.add(ritem);
                 ctable.save(ritem);
                 //4. 更新物资库中有相同rfid记录的rfid字段未空
@@ -102,6 +103,7 @@ public class OrderInModel implements OrderInContact.OrderInMdl {
                 assets.setLastupdate(record.getIndate());
                 assets.setRfid(item.getRfid());
                 assets.setStatus("1");
+                assets.setAsset_code(item.getAsset_code());//clc资产编码
                 table_asset.save(assets);
 
             }
