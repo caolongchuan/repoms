@@ -38,6 +38,7 @@ public class AssetsDao extends AbstractDao<Assets, Long> {
         public final static Property Location = new Property(11, String.class, "location", false, "LOCATION");
         public final static Property Rfid = new Property(12, String.class, "rfid", false, "RFID");
         public final static Property Remark = new Property(13, String.class, "remark", false, "REMARK");
+        public final static Property Asset_code = new Property(14, String.class, "asset_code", false, "ASSET_CODE");
     }
 
 
@@ -66,7 +67,8 @@ public class AssetsDao extends AbstractDao<Assets, Long> {
                 "\"INBOUND\" INTEGER NOT NULL ," + // 10: inbound
                 "\"LOCATION\" TEXT," + // 11: location
                 "\"RFID\" TEXT," + // 12: rfid
-                "\"REMARK\" TEXT);"); // 13: remark
+                "\"REMARK\" TEXT," + // 13: remark
+                "\"ASSET_CODE\" TEXT);"); // 14: asset_code
         // Add Indexes
         db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_ASSETS_ID ON \"ASSETS\"" +
                 " (\"ID\" ASC);");
@@ -133,6 +135,11 @@ public class AssetsDao extends AbstractDao<Assets, Long> {
         if (remark != null) {
             stmt.bindString(14, remark);
         }
+ 
+        String asset_code = entity.getAsset_code();
+        if (asset_code != null) {
+            stmt.bindString(15, asset_code);
+        }
     }
 
     @Override
@@ -188,6 +195,11 @@ public class AssetsDao extends AbstractDao<Assets, Long> {
         if (remark != null) {
             stmt.bindString(14, remark);
         }
+ 
+        String asset_code = entity.getAsset_code();
+        if (asset_code != null) {
+            stmt.bindString(15, asset_code);
+        }
     }
 
     @Override
@@ -211,7 +223,8 @@ public class AssetsDao extends AbstractDao<Assets, Long> {
             cursor.getShort(offset + 10) != 0, // inbound
             cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // location
             cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // rfid
-            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13) // remark
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // remark
+            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14) // asset_code
         );
         return entity;
     }
@@ -232,6 +245,7 @@ public class AssetsDao extends AbstractDao<Assets, Long> {
         entity.setLocation(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
         entity.setRfid(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
         entity.setRemark(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
+        entity.setAsset_code(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
      }
     
     @Override

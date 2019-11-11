@@ -186,6 +186,9 @@ public class DataSyncUtils {
                             subitem.put("rfid", order_item.getRfid());
                             subitem.put("num", order_item.getCount());
                             subitem.put("remark", "");
+
+                            subitem.put("asset_code",order_item.getAsset_code());//clc 资产编码
+
                             subitems.put(subitem);
                         }
                         item.put("materials", subitems);

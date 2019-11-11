@@ -34,11 +34,10 @@ public class Order_In_Detail {
     private String remark;
     private String asset_code;  //资产编码
 
-    @Generated(hash = 371122089)
-    public Order_In_Detail(Long id, @NotNull String order, @NotNull String asset,
-                           @NotNull String name, @NotNull String clsct, String specification,
-                           String manut, double price, String location, String rfid,
-                           boolean completed, boolean uploaded, int count, String remark,String asset_code) {
+    @Generated(hash = 1185063414)
+    public Order_In_Detail(Long id, @NotNull String order, @NotNull String asset, @NotNull String name,
+            @NotNull String clsct, String specification, String manut, double price, String location, String rfid,
+            boolean completed, boolean uploaded, int count, String remark, String asset_code) {
         this.id = id;
         this.order = order;
         this.asset = asset;
@@ -53,7 +52,7 @@ public class Order_In_Detail {
         this.uploaded = uploaded;
         this.count = count;
         this.remark = remark;
-        this.asset_code = asset_code;//clc资产编码
+        this.asset_code = asset_code;
     }
 
     @Generated(hash = 1683712341)

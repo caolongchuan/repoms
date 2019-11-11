@@ -33,26 +33,27 @@ public class Assets {
     private String rfid;
     private String remark;
     private String asset_code;      //clc 资产编码
-    @Generated(hash = 537539577)
-public Assets(Long pid, @NotNull String id, @NotNull String name,
-        @NotNull String clsct, String specification, String manut, double price,
-        Date indate, Date lastupdate, String status, boolean inbound,
-        String location, String rfid, String remark) {
-    this.pid = pid;
-    this.id = id;
-    this.name = name;
-    this.clsct = clsct;
-    this.specification = specification;
-    this.manut = manut;
-    this.price = price;
-    this.indate = indate;
-    this.lastupdate = lastupdate;
-    this.status = status;
-    this.inbound = inbound;
-    this.location = location;
-    this.rfid = rfid;
-    this.remark = remark;
-}
+    @Generated(hash = 941929805)
+    public Assets(Long pid, @NotNull String id, @NotNull String name,
+            @NotNull String clsct, String specification, String manut, double price,
+            Date indate, Date lastupdate, String status, boolean inbound,
+            String location, String rfid, String remark, String asset_code) {
+        this.pid = pid;
+        this.id = id;
+        this.name = name;
+        this.clsct = clsct;
+        this.specification = specification;
+        this.manut = manut;
+        this.price = price;
+        this.indate = indate;
+        this.lastupdate = lastupdate;
+        this.status = status;
+        this.inbound = inbound;
+        this.location = location;
+        this.rfid = rfid;
+        this.remark = remark;
+        this.asset_code = asset_code;
+    }
 @Generated(hash = 1373698660)
 public Assets() {
 }
