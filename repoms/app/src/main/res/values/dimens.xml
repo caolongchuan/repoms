@@ -1,0 +1,51 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="lbl_menu_btn_font_size">28dp</dimen>
+    <dimen name="lbl_icon_font_size">30sp</dimen>
+    <dimen name="toolbar_height">45dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+
+    <!--主页面-->
+    <dimen name="common_toolbar_height">48dp</dimen>
+    <dimen name="common_tab_height">44dp</dimen>
+
+    <!--list页面的字体大小-->
+    <dimen name="list_text_size">14sp</dimen>
+    <dimen name="list_text_size_inv">16sp</dimen>
+    <dimen name="list_icon_btn_size">32sp</dimen>
+    <dimen name="list_text_size_pos">18sp</dimen>
+    <dimen name="list_icon_size_pos">20sp</dimen>
+
+    <dimen name="sub_title_size">26sp</dimen>
+    <dimen name="title_size">28sp</dimen>
+
+    <!-- ==================确认取消对话框（alertdialog）================== -->
+    <!-- 对话框的圆角角度 -->
+    <dimen name="alert_dialog_confirm_corners">5dp</dimen>
+    <!-- 对话框的整体外边距 -->
+    <dimen name="alert_dialog_confirm_margin">30dp</dimen>
+    <!-- 对话框的图标内边距 -->
+    <dimen name="alert_dialog_confirm_img_padding">15dp</dimen>
+    <!-- 对话框的内容内边距 -->
+    <dimen name="alert_dialog_confirm_message_padding">20dp</dimen>
+    <!-- 对话框的内容大小 -->
+    <dimen name="alert_dialog_confirm_message_text_size">16sp</dimen>
+    <!-- 对话框的按钮内边距 -->
+    <dimen name="alert_dialog_confirm_btn_padding">10dp</dimen>
+    <!-- 对话框的按钮大小 -->
+    <dimen name="alert_dialog_confirm_btn_text_size">16sp</dimen>
+
+    <!--菜单项-->
+    <dimen name="margin_menu_icon_name">8dp</dimen>
+    <dimen name="menu_icon_width">64dp</dimen>
+    <dimen name="menu_icon_height">64dp</dimen>
+    <dimen name="menu_txt_name_size">18sp</dimen>
+    <dimen name="menu_con_margin_top">40dp</dimen>
+    <dimen name="item_padding_common">8dp</dimen>
+    <dimen name="item_margin_common">8dp</dimen>
+    <dimen name="title_text_size">18sp</dimen>
+    <dimen name="RoundedAmplitude">1dp</dimen>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorDetailBackground">#EEEEEE</color>
+    <color name="colorDetailTitle">#FFFFFF</color>
+    <color name="colorDetailItemBackground">#FFFFFF</color>
+    <color name="colorDetailItemText">#888888</color>
+    <color name="colorDetailItemValue">#222222</color>
+    <color name="colorDefaultTextColor">#333333</color>
+    <color name="colorButtonTextCommon">#FFFFFF</color>
+    <color name="colorTextCommon">#FFFFFF</color>
+    <color name="gray">#EEEEEE</color>
+    <color name="colorTotal">#303F9F</color>
+    <color name="colorInvented">#00FF00</color>
+    <color name="colorUnInvented">#888888</color>
+    <color name="colorButtonOK">#00BFFF</color>
+    <color name="colorButtonCancel">#AAAAAA</color>
+    <color name="colorPrimaryBG">#3c9afe</color>
+    <color name="colorDivider1">#CCCCCC</color>
+    <!-- ==================确认取消对话框（alertdialog）================== -->
+    <!-- 对话框的填充颜色 -->
+    <color name="alert_dialog_confirm_solid_color">#ffffffff</color>
+    <!-- 对话框的内容颜色 -->
+    <color name="alert_dialog_confirm_message_color">#6A6A6A</color>
+
+    <!-- 对话框的左侧按钮颜色 -->
+    <!--<color name="alert_dialog_confirm_btn_left_color">#4065EF</color>-->
+    <!-- 对话框的左侧按钮文字颜色 -->
+    <!--<color name="alert_dialog_confirm_btn_left_text_color">#ffffffff</color>-->
+    <!-- 对话框的右侧按钮默认颜色 -->
+    <!--<color name="alert_dialog_confirm_btn_right_color">#E7E7E7</color>-->
+    <!-- 方案二 -->
+    <color name="alert_dialog_confirm_btn_left_color">#FFFFFF</color>
+    <color name="alert_dialog_confirm_btn_left_text_color">#000000</color>
+    <color name="alert_dialog_confirm_btn_right_color">#FFFFFF</color>
+    <!-- 对话框的右侧按钮文字颜色 -->
+    <color name="alert_dialog_confirm_btn_right_text_color">#000000</color>
+</resources>
