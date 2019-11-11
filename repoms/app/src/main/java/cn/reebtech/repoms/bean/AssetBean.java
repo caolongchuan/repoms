@@ -16,8 +16,8 @@ public class AssetBean implements Serializable {
     private boolean inbound;
     private String location;
     private String rfid;
-    private String asset_code;  //clc资产编码
     private String remark;
+    private String asset_code;  //clc资产编码
 
     public String getId() {
         return id;

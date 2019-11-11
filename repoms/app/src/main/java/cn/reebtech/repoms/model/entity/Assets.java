@@ -31,9 +31,9 @@ public class Assets {
     private boolean inbound;
     private String location;
     private String rfid;
-    private String asset_code;      //clc 资产编码
     private String remark;
-@Generated(hash = 537539577)
+    private String asset_code;      //clc 资产编码
+    @Generated(hash = 537539577)
 public Assets(Long pid, @NotNull String id, @NotNull String name,
         @NotNull String clsct, String specification, String manut, double price,
         Date indate, Date lastupdate, String status, boolean inbound,
