@@ -16,6 +16,7 @@ public class AssetBean implements Serializable {
     private boolean inbound;
     private String location;
     private String rfid;
+    private String asset_code;  //clc资产编码
     private String remark;
 
     public String getId() {
@@ -112,5 +113,13 @@ public class AssetBean implements Serializable {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getAsset_code() {
+        return asset_code;
+    }
+
+    public void setAsset_code(String asset_code) {
+        this.asset_code = asset_code;
     }
 }

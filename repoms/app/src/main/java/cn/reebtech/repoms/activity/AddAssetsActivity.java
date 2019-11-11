@@ -170,6 +170,7 @@ public class AddAssetsActivity extends BaseActivity<AddAssetsContact.AddAssetsPt
                             item.setManut("");
                             item.setSpecification("");
                             item.setRfid(rfid);
+                            item.setAsset_code("asset_code"+rfid); //clc设置资产编码
                             records.add(item);
                         }
                         bundle.putSerializable("assets", (Serializable) records);
