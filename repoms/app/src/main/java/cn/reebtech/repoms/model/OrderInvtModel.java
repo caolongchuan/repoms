@@ -154,6 +154,7 @@ public class OrderInvtModel implements OrderInvtContact.OrderInvtMdl{
             result.setClsct(record.getClsct());
             result.setLocation(record.getLocation());
             result.setRfid(rfid);
+            result.setAsset_code(record.getAsset_code());//clc 资产编码
             callback.onSuccess(OrderOutPresenter.TYPE_LOAD_ASSET, result, new BaseResultBean(0, ""));
         }
         else{

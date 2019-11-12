@@ -46,7 +46,8 @@ public class AssetListAdapter extends RecyclerView.Adapter<AssetListAdapter.View
     @Override
     public void onBindViewHolder(final AssetListAdapter.ViewHolder holder, final int position) {
         final Map<String, Object> item = mDatas.get(position);
-        holder.assetNum.setText("#" + item.get("num"));
+//        holder.assetNum.setText("资产编码:" + item.get("num"));
+        holder.assetNum.setText("资产编码:" + item.get("asset_code"));
         holder.assetName.setText(String.valueOf(item.get("name")));
         // 点击事件注册及分发
         if(null != mOnItemClickListener) {

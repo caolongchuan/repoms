@@ -344,6 +344,7 @@ public class DataSyncModel extends BaseDBModel<User, String, IConDbListener<Inte
                     }
                     @Override
                     public void onNext(String respResult) {
+                        Log.i("clc", "原始数据:"+respResult);
                         try{
                             JSONObject data = new JSONObject(respResult);
                             if(data.getInt("code") == 200){

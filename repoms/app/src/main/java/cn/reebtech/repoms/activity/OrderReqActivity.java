@@ -294,6 +294,7 @@ public class OrderReqActivity extends BaseActivity<OrderReqContact.OrderReqPtr> 
             item.put("num", record.getAssets().size());
             item.put("name", data.getName());
             item.put("id", data.getId() + item.get("num"));
+            item.put("asset_code",data.getAsset_code());
             rcyAdapter.addData(rcyAdapter.getItemCount(), item);
         }
     }

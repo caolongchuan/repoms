@@ -165,6 +165,7 @@ public class OrderRetModel implements OrderRetContact.OrderRetMdl  {
             result.setLocation(record.getLocation());
             result.setPrice(record.getPrice());
             result.setRfid(rfid);
+            result.setAsset_code(record.getAsset_code());//clc资产编码
             callback.onSuccess(OrderOutPresenter.TYPE_LOAD_ASSET, result, new BaseResultBean(0, ""));
         }
         else{

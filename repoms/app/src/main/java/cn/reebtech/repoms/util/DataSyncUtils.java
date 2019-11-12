@@ -66,6 +66,9 @@ public class DataSyncUtils {
                         record.setIndate(CommonUtils.String2Date(item.get("createTime").toString()));
                         record.setLastupdate(CommonUtils.String2Date(item.get("updateTime").toString()));
                         record.setPrice(Double.valueOf(item.get("unitPrice").toString()).doubleValue());
+
+                        record.setAsset_code(item.isNull("assetCode") ? "" : item.get("assetCode").toString());//clc 资产编码
+
                         tb_asset.save(record);
                     }
                     Log.i("物资信息", "保存成功");
