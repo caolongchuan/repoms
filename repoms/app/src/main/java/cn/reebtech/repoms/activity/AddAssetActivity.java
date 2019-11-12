@@ -61,21 +61,21 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> 
     /*About Read EPC*/
     private final int MSG_FIND_ASSET = 0;
     private final int MSG_NOT_FIND_ASSET = 1;
-    private final int MSG_NOT_OPEN_COMMPORT=2;
+    private final int MSG_NOT_OPEN_COMMPORT = 2;
     private boolean runFlag = false;
     private boolean startFlag = false;
     private UhfReader manager; // UHF manager,UHF Operating handle
     public String epc = "";
     private SharedPreferences shared;
     private SharedPreferences.Editor editor;
-    private String[] powers = {"30dbm","26dbm","24dbm","20dbm","18dbm","17dbm","16dbm"};
-    private int power = 0 ;//rate of work
+    private String[] powers = {"30dbm", "26dbm", "24dbm", "20dbm", "18dbm", "17dbm", "16dbm"};
+    private int power = 0;//rate of work
     private int area = 0;
     private AssetScanThread scanThread = null;
     /**
      * Handler分发Runnable对象的方式
      */
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -94,6 +94,7 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> 
             }
         }
     };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +105,7 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> 
         initView();
     }
 
-    private void initView(){
+    private void initView() {
         shared = getSharedPreferences("UhfRfPower", 0);
         editor = shared.edit();
         power = shared.getInt("power", 30);
@@ -133,32 +134,34 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> 
         setListeners();
     }
 
-    private void setListeners(){
+    private void setListeners() {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.saveOk:
                         //检查数据是否有效
-                        if(record.getClsct().equals("") || record.getName().equals("")){
+                        if (record.getClsct().equals("") || record.getName().equals("")) {
                             Toast.makeText(AddAssetActivity.this, getString(R.string.str_save_asset_clsct_invalid), Toast.LENGTH_LONG);
                             break;
                         }
-                        if(txtRFID.getText().toString().equals("") || txtRFID.getText().toString().equals(getString(R.string.str_rfid_binded))){
+                        if (txtRFID.getText().toString().equals("") || txtRFID.getText().toString().equals(getString(R.string.str_rfid_binded))) {
                             //txtRFID.setText("12312alskdfasd");
                             Toast.makeText(AddAssetActivity.this, getString(R.string.str_save_asset_rfid_invalid), Toast.LENGTH_LONG);
                             break;
                         }
                         record.setManut(txtManut.getText().toString());
-                        if(txtPrice.getText().toString().equals("")){
+                        if (txtPrice.getText().toString().equals("")) {
                             record.setPrice(0);
-                        }
-                        else{
+                        } else {
                             record.setPrice(Double.valueOf(txtPrice.getText().toString()));
                         }
                         record.setSpecification(txtSpec.getText().toString());
                         //组合数据并返回
                         record.setRfid(txtRFID.getText().toString());
+
+                        record.setAsset_code("Asset_code" + txtRFID.getText().toString());
+
                         Intent retIntent = getIntent();
                         retIntent.putExtra("asset", record);
                         AddAssetActivity.this.setResult(1000, retIntent);
@@ -166,7 +169,8 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> 
                         break;
                 }
                 return true;
-            }});
+            }
+        });
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -178,24 +182,24 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> 
         });
         btnScan.setOnClickListener(this);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_no_list, menu);
         return true;
     }
+
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.imgbtn_asset_add_scan:
-                if(runFlag){
-                    if(startFlag){
+                if (runFlag) {
+                    if (startFlag) {
                         startFlag = false;
-                    }
-                    else{
+                    } else {
                         startFlag = true;
                     }
-                }
-                else{
+                } else {
                     runFlag = true;
                     startFlag = true;
                     new AssetScanThread().start();
@@ -214,13 +218,12 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> 
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        HashMap<String,String> map=(HashMap<String,String>)parent.getItemAtPosition(position);
-        String key=map.get("id");
+        HashMap<String, String> map = (HashMap<String, String>) parent.getItemAtPosition(position);
+        String key = map.get("id");
         String name = map.get("name");
-        if(parent == spAssetClsFst){
+        if (parent == spAssetClsFst) {
             getPresenter().initData(AddAssetPresenter.TYPE_INIT_DATA_CLSSCD, key);
-        }
-        else if(parent == spAssetClsScd){
+        } else if (parent == spAssetClsScd) {
             record.setName(name);
             record.setClsct(key);
             //根据小类存放位置信息更新显示存放规定
@@ -239,10 +242,10 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> 
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         manager = UhfReader.getInstance();
-        if(manager == null){
+        if (manager == null) {
             Log.i("openComFailed", "Open ComPort Failed");
             return;
         }
@@ -251,21 +254,23 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> 
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if(manager!=null){
+        if (manager != null) {
             manager.setOutputPower(power);
             manager.setWorkArea(area);
         }
     }
+
     @Override
-    protected void onPause(){
+    protected void onPause() {
         startFlag = false;
         if (manager != null) {
             manager.close();
         }
         super.onPause();
     }
+
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         startFlag = false;
         runFlag = false;
         if (manager != null) {
@@ -274,25 +279,28 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> 
         unregisterReceiver(mResultReceiver);
         super.onDestroy();
     }
+
     @Override
     public void fillSpinner(int type, List<Map<String, String>> data) {
-        switch(type){
+        switch (type) {
             case AddAssetPresenter.TYPE_INIT_DATA_CLSFST:
-                spAssetClsFst.setAdapter(new SimpleAdapter(this, data, R.layout.simple_spinner_item, new String[]{ "name", "id"}, new int[] {R.id.txt_spinner_item_name, R.id.txt_spinner_item_key}));
+                spAssetClsFst.setAdapter(new SimpleAdapter(this, data, R.layout.simple_spinner_item, new String[]{"name", "id"}, new int[]{R.id.txt_spinner_item_name, R.id.txt_spinner_item_key}));
                 spAssetClsFst.setOnItemSelectedListener(this);
                 break;
             case AddAssetPresenter.TYPE_INIT_DATA_CLSSCD:
-                spAssetClsScd.setAdapter(new SimpleAdapter(this, data, R.layout.simple_spinner_item, new String[]{ "name", "id"}, new int[] {R.id.txt_spinner_item_name, R.id.txt_spinner_item_key}));
+                spAssetClsScd.setAdapter(new SimpleAdapter(this, data, R.layout.simple_spinner_item, new String[]{"name", "id"}, new int[]{R.id.txt_spinner_item_name, R.id.txt_spinner_item_key}));
                 spAssetClsScd.setOnItemSelectedListener(this);
                 break;
         }
     }
+
     @Override
     public void setBindedRFIDs(List<Map<String, String>> rfids) {
-        if(rfids != null && rfids.size() > 0){
+        if (rfids != null && rfids.size() > 0) {
             this.bindedRFIDs = rfids;
         }
     }
+
     @Override
     public void updateSugLocation(String location) {
         txtSugLocation.setText(location);
@@ -303,11 +311,10 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> 
         boolean valid = Boolean.parseBoolean(result.get("valid").toString());
         boolean canbind = Boolean.parseBoolean(result.get("canbind").toString());
         String rfid = result.get("rfid").toString();
-        if(valid){
-            if(canbind){
+        if (valid) {
+            if (canbind) {
                 txtRFID.setText(rfid);
-            }
-            else{
+            } else {
                 final String rfidi = rfid;
                 new AlertDialog.Builder(AddAssetActivity.this).setTitle(getString(R.string.str_confirm_rfid_rebind))
                         .setIcon(android.R.drawable.ic_dialog_info)
@@ -326,24 +333,24 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> 
                             }
                         }).show();
             }
-        }
-        else{
+        } else {
             showToast(getString(R.string.str_rfid_not_valid_need_upload));
         }
     }
 
-    private boolean rfidValid(String rfid){
+    private boolean rfidValid(String rfid) {
         boolean result = true;
-        for(Map<String, String> item : bindedRFIDs){
-            if(item.get("rfid").equals(rfid)){
+        for (Map<String, String> item : bindedRFIDs) {
+            if (item.get("rfid").equals(rfid)) {
                 result = false;
                 break;
             }
         }
         return result;
     }
+
     @Override
-    public void showToast(String msg){
+    public void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG);
     }
 
@@ -353,17 +360,18 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> 
     class AssetScanThread extends Thread {
         private List<byte[]> epcList;
         byte[] accessPassword = Tools.HexString2Bytes("00000000");
+
         @Override
         public void run() {
             super.run();
             while (runFlag) {
                 if (startFlag) {
-                    if(manager!= null){
+                    if (manager != null) {
                         // manager.stopInventoryMulti()
                         epcList = manager.inventoryRealTime(); // inventory real time
                         if (epcList != null && !epcList.isEmpty()) {
                             for (byte[] epc : epcList) {
-                                if(epc != null && epc.length > 0) {
+                                if (epc != null && epc.length > 0) {
                                     startFlag = false;
                                     String epcStr = Tools.Bytes2HexString(epc, epc.length);
                                     Message message = new Message();
@@ -378,17 +386,13 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> 
                     }
                     epcList = null;
                 }
-                try{
+                try {
                     Thread.sleep(50);
+                } catch (Exception e) {
                 }
-                catch(Exception e){}
             }
         }
     }
-
-
-
-
 
 
     private UHFManager mUHFMgr;
@@ -396,23 +400,22 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> 
     private BroadcastReceiver mResultReceiver = new BroadcastReceiver() {
 
         @Override
-        public void onReceive(Context context, Intent intent)
-        {
+        public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if(!"nlscan.intent.action.uhf.ACTION_RESULT".equals(action))
-                return ;
+            if (!"nlscan.intent.action.uhf.ACTION_RESULT".equals(action))
+                return;
             //标签数据数组
-            Parcelable[] tagInfos =  intent.getParcelableArrayExtra("tag_info");
+            Parcelable[] tagInfos = intent.getParcelableArrayExtra("tag_info");
             //本次盘点启动的时间
             long startReading = intent.getLongExtra("extra_start_reading_time", 0l);
             //......
             assert tagInfos != null;
-            for(Parcelable parcel : tagInfos)
-            {
-                TagInfo tagInfo = (TagInfo)parcel;
-                String epcStr = UHFReader. bytes_Hexstr(tagInfo. EpcId);
-                Log.d("TAG","Epc ID : "+ epcStr);
+            for (Parcelable parcel : tagInfos) {
+                TagInfo tagInfo = (TagInfo) parcel;
+                String epcStr = UHFReader.bytes_Hexstr(tagInfo.EpcId);
+                Log.d("TAG", "Epc ID : " + epcStr);
 
+                runFlag = false;
                 startFlag = false;
                 Message message = new Message();
                 message.what = MSG_FIND_ASSET;
@@ -426,27 +429,30 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> 
             }
         }//end onReceiver
     };
+
     /**
      * clc启动扫描
      */
-    private void startScan(){
+    private void startScan() {
         //----启动盘点
         UHFReader.READER_STATE er = mUHFMgr.startTagInventory();
-        if( er == UHFReader.READER_STATE. OK_ERR){
-            Log.d("TAG","MT90手持机盘点启动成功");
-        }else{
-            Log.d("TAG","MT90手持机盘点启动失败");
+        if (er == UHFReader.READER_STATE.OK_ERR) {
+            Log.d("TAG", "MT90手持机盘点启动成功");
+        } else {
+            Log.d("TAG", "MT90手持机盘点启动失败");
         }
     }
-    private void stopScan(){
+
+    private void stopScan() {
         //----停止盘点
         UHFReader.READER_STATE er = mUHFMgr.stopTagInventory();
-        if( er == UHFReader.READER_STATE. OK_ERR){
-            Log.d("TAG","MT90手持机盘点停止成功");
-        }else{
-            Log.d("TAG","MT90手持机盘点停止成功");
+        if (er == UHFReader.READER_STATE.OK_ERR) {
+            Log.d("TAG", "MT90手持机盘点停止成功");
+        } else {
+            Log.d("TAG", "MT90手持机盘点停止成功");
         }
     }
+
     /**
      * clc添加
      */
@@ -456,7 +462,6 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> 
         IntentFilter iFilter = new IntentFilter("nlscan.intent.action.uhf.ACTION_RESULT");
         registerReceiver(mResultReceiver, iFilter);
     }
-
 
 
 }
