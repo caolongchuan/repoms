@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -22,7 +21,7 @@ import java.util.Map;
 import cn.reebtech.repoms.R;
 import cn.reebtech.repoms.contact.OrderListContact;
 import cn.reebtech.repoms.presenter.OrderListPresenter;
-import cn.reebtech.repoms.util.OrderListAdapter;
+import cn.reebtech.repoms.Adapter.OrderListAdapter;
 
 public class OrderListActivity  extends BaseActivity<OrderListContact.OrderListPtr> implements OrderListContact.OrderListUI,
         View.OnClickListener,

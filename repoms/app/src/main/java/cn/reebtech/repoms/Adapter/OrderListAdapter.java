@@ -1,7 +1,6 @@
-package cn.reebtech.repoms.util;
+package cn.reebtech.repoms.Adapter;
 
 import android.content.Context;
-import android.opengl.Visibility;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;

@@ -46,7 +46,7 @@ import cn.reebtech.repoms.contact.OrderOutContact;
 import cn.reebtech.repoms.presenter.OrderInPresenter;
 import cn.reebtech.repoms.presenter.OrderListPresenter;
 import cn.reebtech.repoms.presenter.OrderOutPresenter;
-import cn.reebtech.repoms.util.AssetListAdapter;
+import cn.reebtech.repoms.Adapter.AssetListAdapter;
 import cn.reebtech.repoms.util.CommonUtils;
 import cn.reebtech.repoms.util.DBUtils;
 

@@ -24,8 +24,7 @@ import cn.reebtech.repoms.bean.BaseResultBean;
 import cn.reebtech.repoms.bean.DataSyncBean;
 import cn.reebtech.repoms.contact.DataSyncContact;
 import cn.reebtech.repoms.presenter.DataSyncPresenter;
-import cn.reebtech.repoms.util.SyncItemListAdapter;
-import cn.reebtech.repoms.util.net.ApiService;
+import cn.reebtech.repoms.Adapter.SyncItemListAdapter;
 import cn.reebtech.repoms.view.LoadingView;
 
 public class DataSyncActivity extends BaseActivity<DataSyncContact.DataSyncPtr>

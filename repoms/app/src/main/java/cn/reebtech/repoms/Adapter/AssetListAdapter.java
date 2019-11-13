@@ -1,4 +1,4 @@
-package cn.reebtech.repoms.util;
+package cn.reebtech.repoms.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,8 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -17,7 +15,7 @@ import java.util.Map;
 
 import cn.reebtech.repoms.R;
 
-public class SyncItemListAdapter extends RecyclerView.Adapter<SyncItemListAdapter.ViewHolder>{
+public class AssetListAdapter extends RecyclerView.Adapter<AssetListAdapter.ViewHolder>{
     private List<Map<String, Object>> mDatas = null;
     private LayoutInflater mInflater = null;
     private OnItemClickListener mOnItemClickListener = null;
@@ -25,19 +23,19 @@ public class SyncItemListAdapter extends RecyclerView.Adapter<SyncItemListAdapte
     /*
     * 默认构造方法
     * */
-    public SyncItemListAdapter(Context context){
+    public AssetListAdapter(Context context){
         this.mInflater = LayoutInflater.from(context);
         this.mDatas = new ArrayList<Map<String, Object>>();
     }
-    public SyncItemListAdapter(Context context, List<Map<String, Object>> datas) {
+    public AssetListAdapter(Context context, List<Map<String, Object>> datas) {
         this.mDatas = datas;
         this.mInflater = LayoutInflater.from(context);
     }
 
     // 创建新View，被LayoutManager所调用
     @Override
-    public SyncItemListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.frag_sync_item, parent, false);
+    public AssetListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = mInflater.inflate(R.layout.rcy_item_asset, parent, false);
         ViewHolder vewHolder = new ViewHolder(view);
         return vewHolder;
     }
@@ -46,15 +44,17 @@ public class SyncItemListAdapter extends RecyclerView.Adapter<SyncItemListAdapte
     * 将数据与界面进行绑定
     * */
     @Override
-    public void onBindViewHolder(final SyncItemListAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final AssetListAdapter.ViewHolder holder, final int position) {
         final Map<String, Object> item = mDatas.get(position);
-        holder.syncItem.setText("" + item.get("name"));
+//        holder.assetNum.setText("资产编码:" + item.get("num"));
+        holder.assetNum.setText("资产编码:" + item.get("asset_code"));
+        holder.assetName.setText(String.valueOf(item.get("name")));
         // 点击事件注册及分发
         if(null != mOnItemClickListener) {
-            holder.syncEnable.setOnClickListener(new View.OnClickListener() {
+            holder.assetTrush.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnItemClickListener.onRcyItemClick(SyncItemListAdapter.this, holder.syncEnable, position);
+                    mOnItemClickListener.onClick(holder.assetTrush, position);
                     Log.i("item_click:", String.valueOf(item.get("name")));
                 }
             });
@@ -127,11 +127,25 @@ public class SyncItemListAdapter extends RecyclerView.Adapter<SyncItemListAdapte
         if(position != getItemCount()) {
             notifyItemRangeChanged(position, getItemCount());
         }
+        updateData();
+    }
+
+    public void removeAll(){
+        mDatas.clear();
+        notifyDataSetChanged();
+    }
+
+    public void updateData(){
+        for(int i = 0; i < mDatas.size(); i++){
+            Map<String, Object> item = mDatas.get(i);
+            item.put("num", (i+1));
+        }
+        notifyDataSetChanged();
     }
 
     // 点击事件接口
     public interface OnItemClickListener {
-        void onRcyItemClick(SyncItemListAdapter parent, View view, int position);
+        void onClick(View parent, int position);
     }
 
     // 长按事件接口
@@ -146,12 +160,15 @@ public class SyncItemListAdapter extends RecyclerView.Adapter<SyncItemListAdapte
 
     // 自定义的ViewHolder，持有每个Item的的所有界面组件
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView syncItem = null;
-        public CheckBox syncEnable = null;
+        public TextView assetNum = null;
+        public TextView assetName = null;
+        public ImageButton assetTrush = null;
+
         public ViewHolder(View itemView) {
             super(itemView);
-            syncItem = (TextView) itemView.findViewById(R.id.tv_item_name);
-            syncEnable = (CheckBox) itemView.findViewById(R.id.chk_item_enable);
+            assetNum = (TextView) itemView.findViewById(R.id.txt_asset_num);
+            assetName = (TextView) itemView.findViewById(R.id.txt_asset_name);
+            assetTrush = (ImageButton) itemView.findViewById(R.id.imgbtn_asset_trush);
         }
     }
 }

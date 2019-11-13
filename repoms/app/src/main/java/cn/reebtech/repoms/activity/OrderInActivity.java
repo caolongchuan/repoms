@@ -18,8 +18,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.greenrobot.greendao.DbUtils;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -33,7 +31,7 @@ import cn.reebtech.repoms.bean.OrderInBean;
 import cn.reebtech.repoms.contact.OrderInContact;
 import cn.reebtech.repoms.presenter.OrderInPresenter;
 import cn.reebtech.repoms.presenter.OrderListPresenter;
-import cn.reebtech.repoms.util.AssetListAdapter;
+import cn.reebtech.repoms.Adapter.AssetListAdapter;
 import cn.reebtech.repoms.util.CommonUtils;
 import cn.reebtech.repoms.util.DBUtils;
 

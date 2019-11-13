@@ -42,14 +42,11 @@ import cn.reebtech.repoms.R;
 import cn.reebtech.repoms.RepomsAPP;
 import cn.reebtech.repoms.bean.AssetBean;
 import cn.reebtech.repoms.bean.OrderInvtBean;
-import cn.reebtech.repoms.bean.OrderRetBean;
 import cn.reebtech.repoms.contact.OrderInvtContact;
-import cn.reebtech.repoms.contact.OrderRetContact;
 import cn.reebtech.repoms.presenter.OrderInvtPresenter;
 import cn.reebtech.repoms.presenter.OrderListPresenter;
 import cn.reebtech.repoms.presenter.OrderReqPresenter;
-import cn.reebtech.repoms.presenter.OrderRetPresenter;
-import cn.reebtech.repoms.util.AssetListAdapter;
+import cn.reebtech.repoms.Adapter.AssetListAdapter;
 import cn.reebtech.repoms.util.CommonUtils;
 import cn.reebtech.repoms.util.DBUtils;
 
