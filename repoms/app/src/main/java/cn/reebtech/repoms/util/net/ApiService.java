@@ -54,6 +54,11 @@ public interface ApiService {
     @POST(Contacts.ORDER_INVT_URL)
     Observable<SyncResult> pushOrderInvt(@Header("accessToken") String token, @Body RequestBody  data);
 
+    @GET(Contacts.ON_RFID_ASSEET_URL)
+    Observable<String> featchOnRfidAssets(@Header("accessToken") String token);
+
+    @POST(Contacts.UPDATA_NORFID_ASSET_URL)
+    Observable<String> featchUpdataRfidAssets(@Header("accessToken") String token, @Body RequestBody data);
 
     @Streaming
     @GET

@@ -1,5 +1,6 @@
 package cn.reebtech.repoms.presenter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import java.util.List;
@@ -26,10 +27,10 @@ public class DataSyncPresenter extends BasePresenter<DataSyncContact.DataSyncUI,
     public static final int TYPE_DOWN_COMPLETE = 8;
     public static final int TYPE_UP_ITEM_COMPLETE = 9;
     public static final int TYPE_UP_COMPLETE = 10;
-    public DataSyncPresenter(@NonNull DataSyncContact.DataSyncUI view) {
+    public DataSyncPresenter(Context context, @NonNull DataSyncContact.DataSyncUI view) {
         super(view);
         // 实例化 Model 层
-        mDataSyncMdl = new DataSyncModel(view);
+        mDataSyncMdl = new DataSyncModel(context,view);
         //initView();
     }
 

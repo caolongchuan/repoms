@@ -121,7 +121,7 @@ public class DataSyncActivity extends BaseActivity<DataSyncContact.DataSyncPtr>
 
     @Override
     public DataSyncContact.DataSyncPtr onBindPresenter() {
-        return new DataSyncPresenter(this);
+        return new DataSyncPresenter(this,this);
     }
 
     @Override

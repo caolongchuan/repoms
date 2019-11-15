@@ -18,7 +18,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    greendao{
+    greendao {
         schemaVersion 17
         daoPackage 'cn.reebtech.repoms.model.greendao'
         targetGenDir 'src/main/java'

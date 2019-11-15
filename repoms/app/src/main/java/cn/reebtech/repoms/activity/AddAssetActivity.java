@@ -44,7 +44,8 @@ import cn.reebtech.repoms.bean.AssetBean;
 import cn.reebtech.repoms.contact.AddAssetContact;
 import cn.reebtech.repoms.presenter.AddAssetPresenter;
 
-public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> implements AddAssetContact.AddAssetUI, View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr>
+        implements AddAssetContact.AddAssetUI, View.OnClickListener, AdapterView.OnItemSelectedListener {
     private Typeface iconFont;
     private Spinner spAssetClsFst;
     private Spinner spAssetClsScd;
@@ -129,6 +130,7 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> 
         record.setId(String.valueOf(System.currentTimeMillis()));
         scanedAssets = new ArrayList<String>();
         bindedRFIDs = new ArrayList<Map<String, String>>();
+        AddAssetContact.AddAssetPtr presenter = getPresenter();
         getPresenter().initData(AddAssetPresenter.TYPE_INIT_DATA_ALL, "");
         getPresenter().loadBindedRFIDs();
         setListeners();
@@ -181,6 +183,14 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr> 
             }
         });
         btnScan.setOnClickListener(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent retIntent = getIntent();
+        retIntent.putExtra("asset", new AssetBean());
+        AddAssetActivity.this.setResult(1000, retIntent);
+        finish();
     }
 
     @Override

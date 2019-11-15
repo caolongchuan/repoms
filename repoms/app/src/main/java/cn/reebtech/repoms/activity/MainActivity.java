@@ -50,19 +50,21 @@ public class MainActivity extends BaseActivity<MainContact.MainPtr> implements M
     private void loadMenus(){
         //从配置文件读取菜单列表或准备菜单列表
         //图标
-        int icno[] = {  R.drawable.icon_menu_order_out,
-                R.drawable.icon_menu_order_ret, R.drawable.icon_menu_order_req,R.drawable.icon_menu_order_in, R.drawable.icon_menu_inv,
-                 R.drawable.icon_menu_scan_32 , R.drawable.icon_menu_sync, R.drawable.icon_menu_logout };
+        int icon[] = {  R.drawable.icon_menu_order_out, R.drawable.icon_menu_order_ret,
+                R.drawable.icon_menu_order_req,R.drawable.icon_menu_order_in,
+                R.drawable.icon_menu_inv, R.drawable.icon_menu_scan_32 ,
+                R.drawable.icon_menu_sync,R.drawable.icon_menu_label_binding,
+                R.drawable.icon_menu_logout };
         //图标下的文字
         String name[]={getString(R.string.str_menu_order_out),
                 getString(R.string.str_menu_order_ret), getString(R.string.str_menu_order_req),
-                getString(R.string.str_menu_order_in),
-                getString(R.string.str_menu_inv),
-                getString(R.string.str_menu_read_rfid), getString(R.string.str_menu_data_sync), getString(R.string.str_menu_logout)};
+                getString(R.string.str_menu_order_in), getString(R.string.str_menu_inv),
+                getString(R.string.str_menu_read_rfid), getString(R.string.str_menu_data_sync),
+                getString(R.string.str_menu_label_binding), getString(R.string.str_menu_logout)};
         menuList = new ArrayList<Map<String, Object>>();
-        for (int i = 0; i <icno.length; i++) {
+        for (int i = 0; i <icon.length; i++) {
             Map<String, Object> map=new HashMap<String, Object>();
-            map.put("img", icno[i]);
+            map.put("img", icon[i]);
             map.put("text",name[i]);
             menuList.add(map);
         }
@@ -113,7 +115,12 @@ public class MainActivity extends BaseActivity<MainContact.MainPtr> implements M
                         Intent starterDataSync = new Intent(MainActivity.this, DataSyncActivity.class);
                         startActivity(starterDataSync);
                         break;
-                    case 7: //注销
+                    case 7://绑定单个标签
+                        Intent labelBinding = new Intent(MainActivity.this, LabelBindingActivity.class);
+                        labelBinding.putExtra("user", user);
+                        startActivity(labelBinding);
+                        break;
+                    case 8: //注销
                         new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.str_title_confirm_dialog_logout))
                                 .setIcon(android.R.drawable.ic_dialog_info)
                                 .setPositiveButton(getString(R.string.str_title_confirm_btn_ok), new DialogInterface.OnClickListener() {
@@ -132,7 +139,7 @@ public class MainActivity extends BaseActivity<MainContact.MainPtr> implements M
                                     }
                                 }).show();
                         break;
-                    case 8: //临时初始化数据用
+                    case 9: //临时初始化数据用
                         //getPresenter().tmpInitData(1);
                         //getPresenter().tmpInitData(2);
                         //getPresenter().tmpInitData(3);

@@ -1,22 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cn.reebtech.repoms">
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
-    <uses-permission-sdk-23 android:name="android.permission.STATUS_BAR"></uses-permission-sdk-23>
-    <!--允许应用程序改变网络状态-->
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
 
-    <!--允许应用程序改变WIFI连接状态-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-    <!--允许应用程序访问有关的网络信息-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission-sdk-23 android:name="android.permission.STATUS_BAR" /> <!-- 允许应用程序改变网络状态 -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- 允许应用程序改变WIFI连接状态 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 允许应用程序访问有关的网络信息 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 允许应用程序访问WIFI网卡的网络信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 允许应用程序完全使用网络 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
 
-    <!--允许应用程序访问WIFI网卡的网络信息-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-
-    <!--允许应用程序完全使用网络-->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
     <application
         android:name=".RepomsAPP"
         android:allowBackup="true"
@@ -25,6 +20,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activity.LabelBindingActivity"></activity>
         <activity
             android:name=".activity.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -34,24 +30,46 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity" android:launchMode="singleTop"/>
-        <activity android:name=".activity.OrderOutActivity" android:parentActivityName=".activity.MainActivity" />
-        <activity android:name=".activity.OrderInActivity" android:parentActivityName=".activity.MainActivity" />
-        <activity android:name=".activity.AddAssetActivity"/>
-        <activity android:name=".activity.AddAssetsActivity"/>
-        <activity android:name=".activity.OrderReqActivity" android:parentActivityName=".activity.MainActivity" />
-        <activity android:name=".activity.OrderRetActivity" android:parentActivityName=".activity.MainActivity" />
-        <activity android:name=".activity.OrderInvtActivity" android:parentActivityName=".activity.MainActivity" />
-        <activity android:name=".activity.DataSyncActivity" android:parentActivityName=".activity.MainActivity" />
-        <activity android:name=".activity.ScanActivity" android:parentActivityName=".activity.MainActivity" />
-        <activity android:name=".activity.OrderListActivity"></activity>
-        <activity android:name=".activity.ServerSetActivity"></activity>
-        <receiver android:name=".util.ServiceBroadcastReceiver" android:enabled="true" android:exported="true">
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".activity.OrderOutActivity"
+            android:parentActivityName=".activity.MainActivity" />
+        <activity
+            android:name=".activity.OrderInActivity"
+            android:parentActivityName=".activity.MainActivity" />
+        <activity android:name=".activity.AddAssetActivity" />
+        <activity android:name=".activity.AddAssetsActivity" />
+        <activity
+            android:name=".activity.OrderReqActivity"
+            android:parentActivityName=".activity.MainActivity" />
+        <activity
+            android:name=".activity.OrderRetActivity"
+            android:parentActivityName=".activity.MainActivity" />
+        <activity
+            android:name=".activity.OrderInvtActivity"
+            android:parentActivityName=".activity.MainActivity" />
+        <activity
+            android:name=".activity.DataSyncActivity"
+            android:parentActivityName=".activity.MainActivity" />
+        <activity
+            android:name=".activity.ScanActivity"
+            android:parentActivityName=".activity.MainActivity" />
+        <activity android:name=".activity.OrderListActivity" />
+        <activity android:name=".activity.ServerSetActivity" />
+
+        <receiver
+            android:name=".util.ServiceBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
-                <action android:name="NotifyServiceStart"></action>
-                <action android:name="NotifyServiceStop"></action>
+                <action android:name="NotifyServiceStart" />
+                <action android:name="NotifyServiceStop" />
             </intent-filter>
         </receiver>
-        <service android:name=".util.SocketService"></service>
+
+        <service android:name=".util.SocketService" />
     </application>
+
 </manifest>

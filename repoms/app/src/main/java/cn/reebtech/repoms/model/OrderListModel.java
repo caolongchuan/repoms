@@ -24,6 +24,7 @@ import cn.reebtech.repoms.model.entity.Order_Req_Detail;
 import cn.reebtech.repoms.model.entity.Order_Ret;
 import cn.reebtech.repoms.model.entity.Order_Ret_Detail;
 import cn.reebtech.repoms.model.entity.User;
+import cn.reebtech.repoms.model.entity.WaitBindAssets;
 import cn.reebtech.repoms.model.entity.WareHouse;
 import cn.reebtech.repoms.model.greendao.AssetsDao;
 import cn.reebtech.repoms.model.greendao.Order_InDao;
@@ -37,6 +38,7 @@ import cn.reebtech.repoms.model.greendao.Order_Req_DetailDao;
 import cn.reebtech.repoms.model.greendao.Order_RetDao;
 import cn.reebtech.repoms.model.greendao.Order_Ret_DetailDao;
 import cn.reebtech.repoms.model.greendao.UserDao;
+import cn.reebtech.repoms.model.greendao.WaitBindAssetsDao;
 import cn.reebtech.repoms.model.greendao.WareHouseDao;
 import cn.reebtech.repoms.presenter.OrderInPresenter;
 import cn.reebtech.repoms.presenter.OrderListPresenter;
@@ -117,6 +119,21 @@ public class OrderListModel implements OrderListContact.OrderListMdl {
                     item.put("acount", record.getInvcount());
                     item.put("mgr", record.getInvuser());
                     item.put("odate", CommonUtils.parseDateToString(record.getInvdate()));
+                    data.add(item);
+                }
+                break;
+            case OrderListPresenter.TYPE_WAIT_BINDING:
+                WaitBindAssetsDao table_waitbind = getWaitBindAssetsDao();
+                List<WaitBindAssets> list = table_waitbind.queryBuilder().list();
+                for(WaitBindAssets record: list){
+                    Map<String, Object> item = new HashMap<String, Object>();
+//                    item.put("id", record.getId());
+//                    item.put("whouse", getWareHouseName(record.getLocation()));
+//                    item.put("acount", record.getInvcount());
+//                    item.put("mgr", record.getInvuser());
+//                    item.put("odate", CommonUtils.parseDateToString(record.getInvdate()));
+                    item.put("asset_code",record.getAsset_code());
+                    item.put("rfid",record.getRfid());
                     data.add(item);
                 }
                 break;
@@ -258,4 +275,9 @@ public class OrderListModel implements OrderListContact.OrderListMdl {
     private Order_Invt_DetailDao getOrderInvtDetailDao(){
         return GreenDaoManager.getInstance().getSession().getOrder_Invt_DetailDao();
     }
+
+    private WaitBindAssetsDao getWaitBindAssetsDao(){
+        return GreenDaoManager.getInstance().getSession().getWaitBindAssetsDao();
+    }
+
 }

@@ -40,6 +40,7 @@ public class DaoMaster extends AbstractDaoMaster {
         ServerDao.createTable(db, ifNotExists);
         StacodeDao.createTable(db, ifNotExists);
         UserDao.createTable(db, ifNotExists);
+        WaitBindAssetsDao.createTable(db, ifNotExists);
         WareHouseDao.createTable(db, ifNotExists);
     }
 
@@ -64,6 +65,7 @@ public class DaoMaster extends AbstractDaoMaster {
         ServerDao.dropTable(db, ifExists);
         StacodeDao.dropTable(db, ifExists);
         UserDao.dropTable(db, ifExists);
+        WaitBindAssetsDao.dropTable(db, ifExists);
         WareHouseDao.dropTable(db, ifExists);
     }
 
@@ -102,6 +104,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(ServerDao.class);
         registerDaoClass(StacodeDao.class);
         registerDaoClass(UserDao.class);
+        registerDaoClass(WaitBindAssetsDao.class);
         registerDaoClass(WareHouseDao.class);
     }
 

@@ -23,11 +23,11 @@ import cn.reebtech.repoms.contact.OrderListContact;
 import cn.reebtech.repoms.presenter.OrderListPresenter;
 import cn.reebtech.repoms.Adapter.OrderListAdapter;
 
-public class OrderListActivity  extends BaseActivity<OrderListContact.OrderListPtr> implements OrderListContact.OrderListUI,
+public class OrderListActivity extends BaseActivity<OrderListContact.OrderListPtr> implements OrderListContact.OrderListUI,
         View.OnClickListener,
         AdapterView.OnItemSelectedListener,
         OrderListAdapter.OnItemClickListener,
-        OrderListAdapter.OnItemLongClickListener{
+        OrderListAdapter.OnItemLongClickListener {
     private Toolbar toolbar;
     private Typeface iconFont;
     private RecyclerView orderListCon;
@@ -36,6 +36,7 @@ public class OrderListActivity  extends BaseActivity<OrderListContact.OrderListP
 
     private int listType;
     private int opPosition = -1;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,12 +46,12 @@ public class OrderListActivity  extends BaseActivity<OrderListContact.OrderListP
         initView();
     }
 
-    private void initView(){
+    private void initView() {
         toolbar = findViewById(R.id.tb_order_list);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        switch(listType){
+        switch (listType) {
             case OrderListPresenter.TYPE_ORDER_IN:
                 toolbar.setTitle(getString(R.string.str_title_toolbar_order_in_list));
                 break;
@@ -65,6 +66,9 @@ public class OrderListActivity  extends BaseActivity<OrderListContact.OrderListP
                 break;
             case OrderListPresenter.TYPE_ORDER_INV:
                 toolbar.setTitle(getString(R.string.str_title_toolbar_order_inv_list));
+                break;
+            case OrderListPresenter.TYPE_WAIT_BINDING:
+                toolbar.setTitle("待绑定列表");
                 break;
         }
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
@@ -85,7 +89,7 @@ public class OrderListActivity  extends BaseActivity<OrderListContact.OrderListP
         setListeners();
     }
 
-    private void setListeners(){
+    private void setListeners() {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,11 +122,10 @@ public class OrderListActivity  extends BaseActivity<OrderListContact.OrderListP
     @Override
     public void fillList(List<Map<String, Object>> data) {
         rcyAdapter.setData(data);
-        if(data.size() == 0){
+        if (data.size() == 0) {
             lytNoRecords.setVisibility(View.VISIBLE);
             orderListCon.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             lytNoRecords.setVisibility(View.GONE);
             orderListCon.setVisibility(View.VISIBLE);
         }
@@ -131,24 +134,25 @@ public class OrderListActivity  extends BaseActivity<OrderListContact.OrderListP
 
     @Override
     public void onRemoveItemSuccess() {
-        if(opPosition >= 0){
+        if (opPosition >= 0) {
             rcyAdapter.removeData(opPosition);
             opPosition = -1;
         }
-        if(rcyAdapter.getItemCount() == 0){
+        if (rcyAdapter.getItemCount() == 0) {
             lytNoRecords.setVisibility(View.VISIBLE);
             orderListCon.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             lytNoRecords.setVisibility(View.GONE);
             orderListCon.setVisibility(View.VISIBLE);
         }
         showToast("记录删除成功");
     }
+
     @Override
-    public void showToast(String msg){
+    public void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
+
     @Override
     public void onClick(View parent, final int position) {
         Map<String, Object> item = rcyAdapter.getData(position);

@@ -18,4 +18,11 @@ public class Contacts {
     public static final String ORDER_OUT_URL = "/manageplatform/handset/ckAdd";
     public static final String ORDER_IN_URL = "/manageplatform/handset/rkAdd";
     public static final String ORDER_INVT_URL = "/manageplatform/handset/pdAdd";
+
+    //clc添加 只获取未绑定标签的物资数据
+    public static final String ON_RFID_ASSEET_URL = "/manageplatform/handset/material/getAllOrRFID";
+    public static final String UPDATA_NORFID_ASSET_URL = "/manageplatform/handset/material/bdbq";
+
+    public static final String GLOBAL_TOKEN = "token";
+
 }

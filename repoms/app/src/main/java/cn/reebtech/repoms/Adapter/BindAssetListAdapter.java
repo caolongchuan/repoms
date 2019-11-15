@@ -1,6 +1,8 @@
 package cn.reebtech.repoms.Adapter;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.os.Message;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,8 +16,18 @@ import java.util.List;
 import java.util.Map;
 
 import cn.reebtech.repoms.R;
+import cn.reebtech.repoms.activity.LabelBindingActivity;
+import cn.reebtech.repoms.model.entity.Assets;
+import cn.reebtech.repoms.model.entity.WaitBindAssets;
+import cn.reebtech.repoms.model.greendao.WaitBindAssetsDao;
+import cn.reebtech.repoms.util.GreenDaoManager;
 
-public class AssetListAdapter extends RecyclerView.Adapter<AssetListAdapter.ViewHolder>{
+public class BindAssetListAdapter extends RecyclerView.Adapter<BindAssetListAdapter.ViewHolder>{
+    LabelBindingActivity mActivity;
+
+    private static final int MSG_CHOCE_RFID = 2;
+
+
     private List<Map<String, Object>> mDatas = null;
     private LayoutInflater mInflater = null;
     private OnItemClickListener mOnItemClickListener = null;
@@ -24,18 +36,19 @@ public class AssetListAdapter extends RecyclerView.Adapter<AssetListAdapter.View
     /*
     * 默认构造方法
     * */
-    public AssetListAdapter(Context context){
+    public BindAssetListAdapter(Context context,LabelBindingActivity activity){
+        mActivity = activity;
         this.mInflater = LayoutInflater.from(context);
         this.mDatas = new ArrayList<Map<String, Object>>();
     }
-    public AssetListAdapter(Context context, List<Map<String, Object>> datas) {
+    public BindAssetListAdapter(Context context, List<Map<String, Object>> datas) {
         this.mDatas = datas;
         this.mInflater = LayoutInflater.from(context);
     }
 
     // 创建新View，被LayoutManager所调用
     @Override
-    public AssetListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BindAssetListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.rcy_item_asset, parent, false);
         ViewHolder vewHolder = new ViewHolder(view);
         return vewHolder;
@@ -45,11 +58,12 @@ public class AssetListAdapter extends RecyclerView.Adapter<AssetListAdapter.View
     * 将数据与界面进行绑定
     * */
     @Override
-    public void onBindViewHolder(final AssetListAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final BindAssetListAdapter.ViewHolder holder, final int position) {
         final Map<String, Object> item = mDatas.get(position);
 //        holder.assetNum.setText("资产编码:" + item.get("num"));
         holder.assetNum.setText("资产编码:" + item.get("asset_code"));
         holder.assetName.setText(String.valueOf(item.get("name")));
+        holder.assetTrush.setImageResource(R.drawable.icon_bind);
         // 点击事件注册及分发
         if(null != mOnItemClickListener) {
             holder.assetTrush.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +71,14 @@ public class AssetListAdapter extends RecyclerView.Adapter<AssetListAdapter.View
                 public void onClick(View v) {
                     mOnItemClickListener.onClick(holder.assetTrush, position);
                     Log.i("item_click:", String.valueOf(item.get("name")));
+
+                    Message message = new Message();
+                    message.what = MSG_CHOCE_RFID;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("asset_code", (String) item.get("asset_code"));
+                    message.setData(bundle);
+                    mActivity.mHandler.sendMessage(message);
+
                 }
             });
             /*
@@ -171,6 +193,10 @@ public class AssetListAdapter extends RecyclerView.Adapter<AssetListAdapter.View
             assetName = (TextView) itemView.findViewById(R.id.txt_asset_name);
             assetTrush = (ImageButton) itemView.findViewById(R.id.imgbtn_asset_trush);
         }
+    }
+
+    private WaitBindAssetsDao getWaitBindAssetsDao(){
+        return GreenDaoManager.getInstance().getSession().getWaitBindAssetsDao();
     }
 
 

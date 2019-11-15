@@ -141,6 +141,7 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
         assetListCon.setHasFixedSize(true);
         assetListCon.setAdapter(rcyAdapter);
         scanedAssets = new ArrayList<String>();
+
         setListeners();
         getPresenter().initData();
         odate.setText(CommonUtils.parseDateToString(new Date()));

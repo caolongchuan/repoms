@@ -44,7 +44,8 @@ import cn.reebtech.repoms.contact.AddAssetsContact;
 import cn.reebtech.repoms.presenter.AddAssetPresenter;
 import cn.reebtech.repoms.presenter.AddAssetsPresenter;
 
-public class AddAssetsActivity extends BaseActivity<AddAssetsContact.AddAssetsPtr> implements AddAssetsContact.AddAssetsUI, View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class AddAssetsActivity extends BaseActivity<AddAssetsContact.AddAssetsPtr>
+        implements AddAssetsContact.AddAssetsUI, View.OnClickListener, AdapterView.OnItemSelectedListener {
     private Typeface iconFont;
     private Spinner spAssetsClsFst;
     private Spinner spAssetsClsScd;
@@ -195,6 +196,17 @@ public class AddAssetsActivity extends BaseActivity<AddAssetsContact.AddAssetsPt
         });
         btnScan.setOnClickListener(this);
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent retIntent = getIntent();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("assets", new ArrayList<AssetBean>());
+        retIntent.putExtras(bundle);
+        AddAssetsActivity.this.setResult(1001, retIntent);
+        finish();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_no_list, menu);

@@ -25,7 +25,9 @@ import cn.reebtech.repoms.util.DBUtils;
 import cn.reebtech.repoms.util.DataSyncUtils;
 import cn.reebtech.repoms.util.GreenDaoManager;
 import cn.reebtech.repoms.util.IConDbListener;
+import cn.reebtech.repoms.util.SharedPreferencesUtils;
 import cn.reebtech.repoms.util.net.ApiService;
+import cn.reebtech.repoms.util.net.Contacts;
 import cn.reebtech.repoms.util.net.http.RetrofitClient;
 import cn.reebtech.repoms.util.net.result.LoginResult;
 import cn.reebtech.repoms.util.net.result.SyncResult;
@@ -37,12 +39,15 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 
 public class DataSyncModel extends BaseDBModel<User, String, IConDbListener<Integer, LoginBean, BaseResultBean>> implements DataSyncContact.DataSyncMdl {
+    Context mContext;
+
     private ApiService apiService;
     private List<String> uplItems;
     private List<String> dwlItems;
     private String token;
     private DataSyncUtils dataSyncUtils;
-    public DataSyncModel(DataSyncContact.DataSyncUI view){
+    public DataSyncModel(Context context,DataSyncContact.DataSyncUI view){
+        mContext = context;
         uplItems = new ArrayList<String>();
         dwlItems = new ArrayList<String>();
         apiService = RetrofitClient.getInstance((Activity)view).provideApiService();
@@ -185,6 +190,12 @@ public class DataSyncModel extends BaseDBModel<User, String, IConDbListener<Inte
                     public void onNext(LoginResult respResult) {
                         if(respResult.getCode() == 200){
                             token = respResult.getResult();
+
+                            //clc本地保存token
+                            SharedPreferencesUtils sp =
+                                    new SharedPreferencesUtils(mContext, Contacts.GLOBAL_TOKEN);
+                            sp.putValues(new SharedPreferencesUtils.ContentValue(Contacts.GLOBAL_TOKEN,token));
+
                             Log.i("Token", token);
                             callback.onSuccess(DataSyncPresenter.TYPE_LOGIN_SERVER, type, new BaseResultBean(0, ""));
                         }
@@ -204,6 +215,7 @@ public class DataSyncModel extends BaseDBModel<User, String, IConDbListener<Inte
                     }
                 });
     }
+
     private void startDownload(int type, IConDbListener callback){
         String downItem = "";
         if(dwlItems.size() > 0){

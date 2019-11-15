@@ -22,6 +22,7 @@ public class OrderListPresenter extends BasePresenter<OrderListContact.OrderList
     public static final int TYPE_ORDER_RET = 4;
     public static final int TYPE_DELETE_ITEM = 5;
     public static final int TYPE_ORDER_INV = 6;
+    public static final int TYPE_WAIT_BINDING = 7;
 
     public OrderListPresenter(@NonNull OrderListContact.OrderListUI view) {
         super(view);
@@ -37,7 +38,10 @@ public class OrderListPresenter extends BasePresenter<OrderListContact.OrderList
         else{
             getView().fillList((List<Map<String, Object>>)data);
         }
+        if(source.intValue()==TYPE_WAIT_BINDING){
 
+
+        }
     }
 
     @Override

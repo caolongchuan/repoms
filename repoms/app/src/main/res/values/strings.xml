@@ -37,7 +37,7 @@
     <string name="str_lbl_assets_pos_total">资产总数:</string>
     <string name="str_lbl_assets_pos_invented">已盘资产:</string>
     <string name="str_lbl_assets_pos_uninvented">未盘资产:</string>
-    <string name = "str_tab_assets_inv_total">全部资产</string>
+    <string name="str_tab_assets_inv_total">全部资产</string>
     <string name="str_tab_assets_inv_vented">已盘点</string>
     <string name="str_tab_assets_inv_unvented">未盘点</string>
     <string name="str_tab_assets_inv_exception">异常情况</string>
@@ -110,6 +110,10 @@
     <string name="str_menu_order_ret">物资归还</string>
     <string name="str_menu_inv">盘点</string>
     <string name="str_menu_data_sync">数据同步</string>
+
+    <string name="str_menu_label_binding">单标签绑定</string>
+    //clc添加
+
     <string name="str_menu_logout">注销</string>
     <string name="str_save_data">保存</string>
     <string name="str_menu_read_rfid">物资识别</string>
@@ -218,4 +222,8 @@
         <item>物资出库信息</item>
         <item>物资盘点信息</item>
     </string-array>
+
+    <string name="str_lbl_label_bending">单标签绑定</string>
+    <string name="str_search_hine">请输入资产编码</string>
+    <string name="str_lbl_rfid">RFID</string>
 </resources>

@@ -172,7 +172,7 @@ public class OrderInActivity extends BaseActivity<OrderInContact.OrderInPtr>
                 Map<String, Object> item = new HashMap<String, Object>();
                 item.put("num", record.getAssets().size());
                 item.put("name", asset.getName());
-                item.put("id", asset.getId());
+                item.put("asset_code", asset.getAsset_code());
                 rcyAdapter.addData(rcyAdapter.getItemCount(), item);
             }
         }
@@ -188,7 +188,7 @@ public class OrderInActivity extends BaseActivity<OrderInContact.OrderInPtr>
                     Map<String, Object> item = new HashMap<String, Object>();
                     item.put("num", (rcyAdapter.getItemCount() + 1) + "");
                     item.put("name", asset.getName());
-                    item.put("id", asset.getId());
+                    item.put("asset_code", asset.getAsset_code());
                     rcyAdapter.addData(rcyAdapter.getItemCount(), item);
                 }
             }
