@@ -153,6 +153,15 @@ public class BindAssetListAdapter extends RecyclerView.Adapter<BindAssetListAdap
         updateData();
     }
 
+    public void removeDataByAssetCode(String asset_code){
+        for(int i=0;i<mDatas.size();i++){
+            if(mDatas.get(i).get("asset_code").equals(asset_code)){
+                mDatas.remove(i);
+                updateData();
+            }
+        }
+    }
+
     public void removeAll(){
         mDatas.clear();
         notifyDataSetChanged();

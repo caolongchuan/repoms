@@ -109,8 +109,9 @@ public class LabelBindingActivity extends BaseActivity<LabelBendingContact.Label
     private List<Assets> all_asset_list;
     private List<Assets> asset_list;
 
+    private List<String> rfid_bending;
+
     private ApiService apiService;
-    private String token="";
 
 
     /**
@@ -167,6 +168,7 @@ public class LabelBindingActivity extends BaseActivity<LabelBendingContact.Label
      * @param asset_code
      */
     private void bindLabel(final String rfid, final String asset_code) {
+/*
         //判断该标签是否已经绑定物资
         for (Assets a : all_asset_list) {
             if (a.getRfid().equals(rfid)) {
@@ -175,12 +177,13 @@ public class LabelBindingActivity extends BaseActivity<LabelBendingContact.Label
                 return;
             }
         }
+*/
         //正式绑定
         //clc   获取本地保存的token
         SharedPreferencesUtils sp =
                 new SharedPreferencesUtils(this, Contacts.GLOBAL_TOKEN);
 //        sp.putValues(new SharedPreferencesUtils.ContentValue(Contacts.GLOBAL_TOKEN,token));
-        token = sp.getString(Contacts.GLOBAL_TOKEN);
+        String token = sp.getString(Contacts.GLOBAL_TOKEN);
 
         if(!token.equals("")){
             JSONArray data = new JSONArray();
@@ -225,20 +228,23 @@ public class LabelBindingActivity extends BaseActivity<LabelBendingContact.Label
                                     //更新界面
                                     for(int i=0;i<asset_list.size();i++){
                                         Assets aa = asset_list.get(i);
-                                        if(aa.getAsset_code().equals(asset_code)){
+                                        String asset_code1 = aa.getAsset_code();
+                                        if(asset_code1.equals(asset_code)){
                                             for(int j=0;j<all_asset_list.size();j++){
                                                 if(all_asset_list.get(j).getAsset_code().equals(asset_code)){
                                                     all_asset_list.get(j).setRfid(rfid);
+                                                    break;
                                                 }
                                             }
                                             asset_list.remove(aa);
-                                            rcyAdapter.removeData(i);
+                                            rcyAdapter.removeDataByAssetCode(asset_code);
                                             //更新数据库
                                             AssetsDao tb_asset = getAssetDao();
                                             Assets load = tb_asset.load(aa.getPid());
                                             load.setRfid(rfid);
                                             tb_asset.update(load);
 
+                                            rfid_bending.add(rfid);
                                             tv_rfid.setText("");
                                             Toast.makeText(LabelBindingActivity.this, "绑定标签成功", Toast.LENGTH_SHORT).show();
                                         }
@@ -290,12 +296,15 @@ public class LabelBindingActivity extends BaseActivity<LabelBendingContact.Label
     private void initData() {
         apiService = RetrofitClient.getInstance(this).provideApiService();
 
+        rfid_bending = new ArrayList<>();
         asset_list = new ArrayList<>();
         AssetsDao tb_asset = getAssetDao();
         all_asset_list = tb_asset.queryBuilder().list();
         for (Assets a : all_asset_list) {
             if (a.getRfid().equals("")) {
                 asset_list.add(a);
+            }else{
+                rfid_bending.add(a.getRfid());
             }
             Log.i("clc1","----rfid:"+a.getRfid()+"----资产编码："+a.getAsset_code());
         }
@@ -524,14 +533,22 @@ public class LabelBindingActivity extends BaseActivity<LabelBendingContact.Label
                 runFlag = false;
                 startFlag = false;
 
-                Message message = new Message();
-                message.what = MSG_SCAN_RFID;
-                Bundle bundle = new Bundle();
-                bundle.putString("rfid", epcStr);
-                message.setData(bundle);
-                mHandler.sendMessage(message);
-
-                stopScan();
+                boolean bendedFlag = false;
+                for(String s:rfid_bending){
+                    if(s.equals(epcStr)){
+                        bendedFlag = true;
+                        break;
+                    }
+                }
+                if(!bendedFlag){
+                    Message message = new Message();
+                    message.what = MSG_SCAN_RFID;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("rfid", epcStr);
+                    message.setData(bundle);
+                    mHandler.sendMessage(message);
+                    stopScan();
+                }
             }
         }//end onReceiver
     };
