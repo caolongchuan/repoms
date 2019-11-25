@@ -27,7 +27,7 @@
         android:id="@+id/lyt_order_inv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@color/gray"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
@@ -40,22 +40,14 @@
             android:layout_weight="7"
             android:text="@string/str_title_assets_list"
             android:textSize="18sp" />
-
-        <ImageButton
-            android:id="@+id/btn_order_inv_add_asset"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:background="@color/gray"
-            android:contentDescription="@string/str_title_imgbtn_desc_scan"
-            android:src="@drawable/icon_scan_32" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/ryc_order_inv"
         android:layout_width="0dp"
-        android:layout_height="@dimen/recyclerview_height"
+        android:layout_height="@dimen/invt_recyclerview_height"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

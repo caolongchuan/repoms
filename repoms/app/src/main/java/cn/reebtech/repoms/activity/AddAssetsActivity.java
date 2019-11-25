@@ -171,7 +171,7 @@ public class AddAssetsActivity extends BaseActivity<AddAssetsContact.AddAssetsPt
                             item.setManut("");
                             item.setSpecification("");
                             item.setRfid(rfid);
-                            item.setAsset_code("asset_code"+rfid); //clc设置资产编码
+                            item.setAsset_code(GenerateAssetCode(null,rfid)); //clc设置资产编码////////////////////////////////////////////////////////////////////
                             records.add(item);
                         }
                         bundle.putSerializable("assets", (Serializable) records);
@@ -424,6 +424,16 @@ public class AddAssetsActivity extends BaseActivity<AddAssetsContact.AddAssetsPt
         }
     }
 
+
+    /**
+     * 根据指定规则生成资产编码
+     * @param cls
+     * @param rfid
+     * @return
+     */
+    private String GenerateAssetCode(String cls,String rfid){
+        return "asset_code"+rfid;
+    }
 
 
 

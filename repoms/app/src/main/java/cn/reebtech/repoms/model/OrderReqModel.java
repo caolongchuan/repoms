@@ -156,7 +156,7 @@ public class OrderReqModel implements OrderReqContact.OrderReqMdl {
     @Override
     public void loadAsset(String rfid, IConDbListener callback) {
         AssetBean result = null;
-        Assets record = getAssetsDao().queryBuilder().where(AssetsDao.Properties.Rfid.eq(rfid)).unique();
+        Assets record = getAssetsDao().queryBuilder().where(AssetsDao.Properties.Rfid.eq(rfid),AssetsDao.Properties.Status.notEq(3)).unique();
         if(record != null){
             result = new AssetBean();
             result.setId(record.getId());

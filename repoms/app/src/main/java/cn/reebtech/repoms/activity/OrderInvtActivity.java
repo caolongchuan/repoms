@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.pda.serialport.Tools;
+import cn.reebtech.repoms.Adapter.InvtAssetListAdapter;
 import cn.reebtech.repoms.R;
 import cn.reebtech.repoms.RepomsAPP;
 import cn.reebtech.repoms.bean.AssetBean;
@@ -53,8 +54,8 @@ import cn.reebtech.repoms.util.DBUtils;
 public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPtr> implements OrderInvtContact.OrderInvtUI,
         View.OnClickListener,
         AdapterView.OnItemSelectedListener,
-        AssetListAdapter.OnItemClickListener,
-        AssetListAdapter.OnItemLongClickListener {
+        InvtAssetListAdapter.OnItemClickListener,
+        InvtAssetListAdapter.OnItemLongClickListener {
     private Toolbar toolbar;
     private Typeface iconFont;
     private Spinner spWarehouse;
@@ -63,7 +64,7 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
     private OrderInvtBean record;
     private RecyclerView assetListCon;
     private TextView odate;
-    AssetListAdapter rcyAdapter;
+    InvtAssetListAdapter rcyAdapter;
     List<String> scanedAssets;
     private String user;
     /*About Read EPC*/
@@ -135,7 +136,8 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
         assetListCon.setLayoutManager(new LinearLayoutManager(this));
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL);
         assetListCon.addItemDecoration(itemDecoration);
-        rcyAdapter = new AssetListAdapter(this);
+        rcyAdapter = new InvtAssetListAdapter(this);
+
         assetListCon.setItemAnimator(new DefaultItemAnimator());
         // 如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
         assetListCon.setHasFixedSize(true);

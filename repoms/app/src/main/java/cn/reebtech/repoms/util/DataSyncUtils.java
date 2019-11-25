@@ -50,6 +50,7 @@ public class DataSyncUtils {
                         //清空数据
                         tb_asset.deleteAll();
                     }
+                    int length = items.length();
                     for(int i = 0; i < items.length(); i++){
                         JSONObject item = (JSONObject) items.get(i);
                         //加入新数据

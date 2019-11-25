@@ -51,4 +51,5 @@
 
     <!--RecyclerView高度-->
     <dimen name="recyclerview_height">300dp</dimen>
+    <dimen name="invt_recyclerview_height">350dp</dimen>
 </resources>

@@ -162,7 +162,7 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr>
                         //组合数据并返回
                         record.setRfid(txtRFID.getText().toString());
 
-                        record.setAsset_code("Asset_code" + txtRFID.getText().toString());
+                        record.setAsset_code(GenerateAssetCode(null,txtRFID.getText().toString()));/////////////////////////////////////////////////////////
 
                         Intent retIntent = getIntent();
                         retIntent.putExtra("asset", record);
@@ -184,6 +184,18 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr>
         });
         btnScan.setOnClickListener(this);
     }
+
+
+    /**
+     * 根据指定规则生成资产编码
+     * @param cls
+     * @param rfid
+     * @return
+     */
+    private String GenerateAssetCode(String cls,String rfid){
+        return "asset_code"+rfid;
+    }
+
 
     @Override
     public void onBackPressed() {

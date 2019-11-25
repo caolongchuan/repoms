@@ -320,8 +320,8 @@ public class LabelBindingActivity extends BaseActivity<LabelBendingContact.Label
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.setTitle(getResources().getString(R.string.str_lbl_label_bending));
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
-        spAssetClsFst = (Spinner) findViewById(R.id.sp_assets_clsfst);
-        spAssetClsScd = (Spinner) findViewById(R.id.sp_assets_clsscd);
+        spAssetClsFst = findViewById(R.id.sp_assets_clsfst);
+        spAssetClsScd = findViewById(R.id.sp_assets_clsscd);
         tv_rfid = findViewById(R.id.txt_rfid);
         ib_scan = findViewById(R.id.imgbtn_assets_add_scan);
         ib_scan.setOnClickListener(this);
@@ -408,11 +408,7 @@ public class LabelBindingActivity extends BaseActivity<LabelBendingContact.Label
         switch (v.getId()) {
             case R.id.imgbtn_assets_add_scan:
                 if (runFlag) {
-                    if (startFlag) {
-                        startFlag = false;
-                    } else {
-                        startFlag = true;
-                    }
+                    startFlag = !startFlag;
                 } else {
                     runFlag = true;
                     startFlag = true;

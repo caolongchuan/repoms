@@ -15,7 +15,7 @@ import java.util.Map;
 
 import cn.reebtech.repoms.R;
 
-public class AssetListAdapter extends RecyclerView.Adapter<AssetListAdapter.ViewHolder>{
+public class InvtAssetListAdapter extends RecyclerView.Adapter<InvtAssetListAdapter.ViewHolder>{
     private List<Map<String, Object>> mDatas = null;
     private LayoutInflater mInflater = null;
     private OnItemClickListener mOnItemClickListener = null;
@@ -25,18 +25,18 @@ public class AssetListAdapter extends RecyclerView.Adapter<AssetListAdapter.View
     /*
     * 默认构造方法
     * */
-    public AssetListAdapter(Context context){
+    public InvtAssetListAdapter(Context context){
         this.mInflater = LayoutInflater.from(context);
         this.mDatas = new ArrayList<Map<String, Object>>();
     }
-    public AssetListAdapter(Context context, List<Map<String, Object>> datas) {
+    public InvtAssetListAdapter(Context context, List<Map<String, Object>> datas) {
         this.mDatas = datas;
         this.mInflater = LayoutInflater.from(context);
     }
 
     // 创建新View，被LayoutManager所调用
     @Override
-    public AssetListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public InvtAssetListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mInflater.inflate(R.layout.rcy_item_asset, parent, false);
         mHave = view.findViewById(R.id.imgbtn_asset_trush);
         return new ViewHolder(view);
@@ -46,7 +46,7 @@ public class AssetListAdapter extends RecyclerView.Adapter<AssetListAdapter.View
     * 将数据与界面进行绑定
     * */
     @Override
-    public void onBindViewHolder(final AssetListAdapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final InvtAssetListAdapter.ViewHolder holder, final int position) {
         final Map<String, Object> item = mDatas.get(position);
 //        holder.assetNum.setText("资产编码:" + item.get("num"));
         holder.assetNum.setText("资产编码:" + item.get("asset_code"));
@@ -171,6 +171,7 @@ public class AssetListAdapter extends RecyclerView.Adapter<AssetListAdapter.View
             assetNum = (TextView) itemView.findViewById(R.id.txt_asset_num);
             assetName = (TextView) itemView.findViewById(R.id.txt_asset_name);
             assetTrush = (ImageButton) itemView.findViewById(R.id.imgbtn_asset_trush);
+            assetTrush.setImageResource(R.mipmap.icon_have);
         }
     }
 

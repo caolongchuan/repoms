@@ -159,7 +159,7 @@ public class OrderOutModel implements OrderOutContact.OrderOutMdl {
     public void loadAsset(String rfid, IConDbListener callback) {
         AssetBean result = null;
         List<Assets> records = getAssetsDao().queryBuilder().list();
-        Assets record = getAssetsDao().queryBuilder().where(AssetsDao.Properties.Rfid.eq(rfid)).unique();
+        Assets record = getAssetsDao().queryBuilder().where(AssetsDao.Properties.Rfid.eq(rfid), AssetsDao.Properties.Status.notEq(3)).unique();
         if(record != null){
             result = new AssetBean();
             result.setId(record.getId());

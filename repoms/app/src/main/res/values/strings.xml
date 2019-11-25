@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">仓库管理系统V1.0</string>
+    <string name="app_name">固定资产管理系统V1.0</string>
     <string name="str_btn_login">登 录</string>
     <string name="iconft_yonghuming">&#xe654;</string>
     <string name="iconft_mima">&#xe642;</string>
@@ -65,7 +65,7 @@
     <string name="inventory">开始盘点</string>
     <string name="stop_inventory">结束盘点</string>
     <string name="serialport_init_fail_">打开扫描器失败</string>
-    <string name="str_system_name">仓库管理系统</string>
+    <string name="str_system_name">固定资产管理系统</string>
     <string name="str_system_version">V1.0</string>
     <string name="str_config_item_test_net">正在检测手持机网络状态...</string>
     <string name="str_config_item_test_net_result_ok">手持机网络状态正常</string>
@@ -104,8 +104,8 @@
     <string name="str_radio_text_asset_exception_rfid">标签异常</string>
     <string name="str_radio_text_asset_exception_position">位置异常</string>
     <string name="str_tip_dialog_save_ok">保存成功</string>
-    <string name="str_menu_order_out">物资出库</string>
-    <string name="str_menu_order_in">新物资入库</string>
+    <string name="str_menu_order_out">物资出账</string>
+    <string name="str_menu_order_in">新物资入账</string>
     <string name="str_menu_order_req">物资借用</string>
     <string name="str_menu_order_ret">物资归还</string>
     <string name="str_menu_inv">盘点</string>
@@ -117,8 +117,8 @@
     <string name="str_menu_logout">注销</string>
     <string name="str_save_data">保存</string>
     <string name="str_menu_read_rfid">物资识别</string>
-    <string name="str_title_order_in_base">入库基本信息</string>
-    <string name="str_title_order_out_base">出库基本信息</string>
+    <string name="str_title_order_in_base">入账基本信息</string>
+    <string name="str_title_order_out_base">出账基本信息</string>
     <string name="str_title_order_inv_base">盘点基本信息</string>
     <string name="str_title_order_ret_base">归还基本信息</string>
     <string name="str_title_order_req_base">借用基本信息</string>
@@ -126,14 +126,14 @@
     <string name="str_title_btn_data_ul">上传数据</string>
     <string name="str_menu_title_local_list">本地列表</string>
     <string name="str_title_data_sync_dl_basedata">基础数据</string>
-    <string name="str_title_prompt_order_warehouse">选择仓库</string>
+    <string name="str_title_prompt_order_warehouse">选择办公司</string>
     <string name="str_title_prompt_order_from">送货人</string>
     <string name="str_title_prompt_order_rec">物资接收人</string>
     <string name="str_title_prompt_order_ret">归还人</string>
-    <string name="str_title_prompt_order_mgr">仓库经手人</string>
+    <string name="str_title_prompt_order_mgr">经手人</string>
     <string name="str_title_prompt_order_mgr_inv">盘点人</string>
     <string name="str_lbl_btn_scan">扫描</string>
-    <string name="str_lbl_warehouse">仓库</string>
+    <string name="str_lbl_warehouse">办公室</string>
     <string name="str_lbl_asset_rec">接收人</string>
     <string name="str_lbl_asset_send">送货人</string>
     <string name="str_lbl_asset_ret">归还人</string>
@@ -155,10 +155,10 @@
     <string name="str_title_imgbtn_desc_scan">开始扫描</string>
     <string name="str_title_toolbar_order_req">物资借用单</string>
     <string name="str_title_toolbar_order_req_list">物资借用单列表</string>
-    <string name="str_title_toolbar_order_in">新物资入库单</string>
-    <string name="str_title_toolbar_order_in_list">新物资入库单</string>
-    <string name="str_title_toolbar_order_out">物资出库单</string>
-    <string name="str_title_toolbar_order_out_list">物资出库单列表</string>
+    <string name="str_title_toolbar_order_in">新物资入账单</string>
+    <string name="str_title_toolbar_order_in_list">新物资入账单</string>
+    <string name="str_title_toolbar_order_out">物资出账单</string>
+    <string name="str_title_toolbar_order_out_list">物资出账单列表</string>
     <string name="str_title_toolbar_order_ret">物资归还单</string>
     <string name="str_title_toolbar_order_ret_list">物资归还单列表</string>
     <string name="str_title_toolbar_server_set">服务器信息配置</string>
@@ -173,11 +173,11 @@
     <string name="str_order_item_lbl_cont_req">借用人：</string>
     <string name="str_order_item_lbl_cont_ret">归还人：</string>
     <string name="str_order_item_lbl_mgr">经手人：</string>
-    <string name="str_order_item_lbl_acount_in">入库数量：</string>
-    <string name="str_order_item_lbl_acount_out">出库数量：</string>
+    <string name="str_order_item_lbl_acount_in">入账数量：</string>
+    <string name="str_order_item_lbl_acount_out">出账数量：</string>
     <string name="str_order_item_lbl_acount_inv">盘点数量：</string>
-    <string name="str_order_item_lbl_odate_in">入库日期：</string>
-    <string name="str_order_item_lbl_odate_out">出库日期：</string>
+    <string name="str_order_item_lbl_odate_in">入账日期：</string>
+    <string name="str_order_item_lbl_odate_out">出账日期：</string>
     <string name="str_order_item_lbl_odate_inv">盘点日期：</string>
     <string name="str_tip_save_record_msg">请先停止扫描</string>
     <string name="str_rfid_binded">标签已绑定其他物资</string>
@@ -188,7 +188,7 @@
     <string name="str_rfid_not_valid_need_upload">需要上传数据后才能使用此标签</string>
     <string name="str_tip_no_records">暂无更多记录...</string>
     <string name="str_tip_load_order_list_complete">单据列表加载完成</string>
-    <string name="str_lbl_in_count">入库数量</string>
+    <string name="str_lbl_in_count">入账数量</string>
     <string name="str_btn_title_start_test_server_url">测试连接</string>
     <string name="str_txt_tip_server_url">服务器连接地址 ip or url</string>
     <string name="str_txt_tip_server_user">登陆服务器用户名</string>
@@ -215,11 +215,11 @@
         <item>基本信息</item>
         <item>物资信息</item>
         <item>物资分类</item>
-        <item>仓库信息</item>
+        <item>办公室信息</item>
     </string-array>
     <string-array name="uplitems">
-        <item>物资入库信息</item>
-        <item>物资出库信息</item>
+        <item>物资入账信息</item>
+        <item>物资出账信息</item>
         <item>物资盘点信息</item>
     </string-array>
 
