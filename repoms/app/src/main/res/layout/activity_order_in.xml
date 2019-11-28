@@ -44,6 +44,7 @@
             android:textSize="18sp" />
 
         <ImageButton
+            android:visibility="invisible"
             android:id="@+id/btn_order_in_add_asset"
             android:layout_width="32dp"
             android:layout_height="32dp"

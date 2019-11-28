@@ -54,13 +54,13 @@ public class AddAssetPresenter extends BasePresenter<AddAssetContact.AddAssetUI,
     }
 
     @Override
-    public void initData(int type, String parent) {
+    public void initData(int type, String parent, String warehouse) {
         switch(type){
             case TYPE_INIT_DATA_ALL:
-                mAddAssetMdl.loadAssetClsFst(this);
+                mAddAssetMdl.loadAssetClsFst(warehouse,this);
                 break;
             case TYPE_INIT_DATA_CLSFST:
-                mAddAssetMdl.loadAssetClsFst(this);
+                mAddAssetMdl.loadAssetClsFst(warehouse,this);
                 break;
             case TYPE_INIT_DATA_CLSSCD:
                 mAddAssetMdl.loadAssetClsScd(parent, this);

@@ -39,6 +39,7 @@ public class AssetsDao extends AbstractDao<Assets, Long> {
         public final static Property Rfid = new Property(12, String.class, "rfid", false, "RFID");
         public final static Property Remark = new Property(13, String.class, "remark", false, "REMARK");
         public final static Property Asset_code = new Property(14, String.class, "asset_code", false, "ASSET_CODE");
+
     }
 
 

@@ -22,7 +22,7 @@ public final class AddAssetContact {
      * presenter 层接口
      */
     public interface AddAssetPtr extends IBasePresenter {
-        void initData(int type, String parent);
+        void initData(int type, String parent, String warehouse);
         void loadBindedRFIDs();
         void loadSugLocation(String clssscd);
         void checkRfidValid(String rfid);
@@ -31,7 +31,7 @@ public final class AddAssetContact {
      * model 层接口
      */
     public interface AddAssetMdl {
-        void loadAssetClsFst(IConDbListener callback);
+        void loadAssetClsFst(String warehouse,IConDbListener callback);
         void loadAssetClsScd(String parent, IConDbListener callback);
         void loadBindedRFIDs(IConDbListener callback);
         void loadSugLocation(String clssscd, IConDbListener callback);

@@ -104,10 +104,10 @@
     <string name="str_radio_text_asset_exception_rfid">标签异常</string>
     <string name="str_radio_text_asset_exception_position">位置异常</string>
     <string name="str_tip_dialog_save_ok">保存成功</string>
-    <string name="str_menu_order_out">物资出账</string>
-    <string name="str_menu_order_in">新物资入账</string>
-    <string name="str_menu_order_req">物资借用</string>
-    <string name="str_menu_order_ret">物资归还</string>
+    <string name="str_menu_order_out">资产出账</string>
+    <string name="str_menu_order_in">新资产入账</string>
+    <string name="str_menu_order_req">资产借用</string>
+    <string name="str_menu_order_ret">资产归还</string>
     <string name="str_menu_inv">盘点</string>
     <string name="str_menu_data_sync">数据同步</string>
 
@@ -116,7 +116,7 @@
 
     <string name="str_menu_logout">注销</string>
     <string name="str_save_data">保存</string>
-    <string name="str_menu_read_rfid">物资识别</string>
+    <string name="str_menu_read_rfid">资产识别</string>
     <string name="str_title_order_in_base">入账基本信息</string>
     <string name="str_title_order_out_base">出账基本信息</string>
     <string name="str_title_order_inv_base">盘点基本信息</string>
@@ -128,7 +128,7 @@
     <string name="str_title_data_sync_dl_basedata">基础数据</string>
     <string name="str_title_prompt_order_warehouse">选择办公司</string>
     <string name="str_title_prompt_order_from">送货人</string>
-    <string name="str_title_prompt_order_rec">物资接收人</string>
+    <string name="str_title_prompt_order_rec">资产接收人</string>
     <string name="str_title_prompt_order_ret">归还人</string>
     <string name="str_title_prompt_order_mgr">经手人</string>
     <string name="str_title_prompt_order_mgr_inv">盘点人</string>
@@ -140,32 +140,33 @@
     <string name="str_lbl_asset_mgr">经手人</string>
     <string name="str_lbl_asset_invt">盘点人</string>
     <string name="str_lbl_asset_order_date">日期</string>
-    <string name="str_title_assets_list">物资列表</string>
-    <string name="str_title_asset_clsfst">物资大类</string>
-    <string name="str_title_asset_clsscd">物资小类</string>
-    <string name="str_title_asset_location">库位</string>
+    <string name="str_title_assets_list">资产列表</string>
+    <string name="str_title_asset_clsfst">资产大类</string>
+    <string name="str_title_asset_clsscd">资产小类</string>
+    <string name="str_title_asset_location">办公室</string>
     <string name="str_title_asset_fact">厂家</string>
     <string name="str_title_asset_price">单价</string>
+    <string name="str_title_asset_czl">残值率</string>
     <string name="str_title_asset_type">规格</string>
     <string name="str_title_asset_rfid">绑定标签</string>
     <string name="str_title_rfid_info">标签信息</string>
-    <string name="str_title_rfid_asset_info">绑定物资信息</string>
-    <string name="str_title_prompt_asset_clsfst">物资大类</string>
-    <string name="str_title_prompt_asset_clsscd">物资小类</string>
+    <string name="str_title_rfid_asset_info">绑定资产信息</string>
+    <string name="str_title_prompt_asset_clsfst">资产大类</string>
+    <string name="str_title_prompt_asset_clsscd">资产小类</string>
     <string name="str_title_imgbtn_desc_scan">开始扫描</string>
-    <string name="str_title_toolbar_order_req">物资借用单</string>
-    <string name="str_title_toolbar_order_req_list">物资借用单列表</string>
-    <string name="str_title_toolbar_order_in">新物资入账单</string>
-    <string name="str_title_toolbar_order_in_list">新物资入账单</string>
-    <string name="str_title_toolbar_order_out">物资出账单</string>
-    <string name="str_title_toolbar_order_out_list">物资出账单列表</string>
-    <string name="str_title_toolbar_order_ret">物资归还单</string>
-    <string name="str_title_toolbar_order_ret_list">物资归还单列表</string>
+    <string name="str_title_toolbar_order_req">资产借用单</string>
+    <string name="str_title_toolbar_order_req_list">资产借用单列表</string>
+    <string name="str_title_toolbar_order_in">新资产入账单</string>
+    <string name="str_title_toolbar_order_in_list">新资产入账单</string>
+    <string name="str_title_toolbar_order_out">资产出账单</string>
+    <string name="str_title_toolbar_order_out_list">资产出账单列表</string>
+    <string name="str_title_toolbar_order_ret">资产归还单</string>
+    <string name="str_title_toolbar_order_ret_list">资产归还单列表</string>
     <string name="str_title_toolbar_server_set">服务器信息配置</string>
     <string name="str_msg_toast_save_order_success">单据保存成功</string>
-    <string name="str_title_toolbar_order_inv">物资盘点单</string>
-    <string name="str_title_toolbar_order_inv_list">物资盘点单列表</string>
-    <string name="str_lbl_asset_name">物资</string>
+    <string name="str_title_toolbar_order_inv">资产盘点单</string>
+    <string name="str_title_toolbar_order_inv_list">资产盘点单列表</string>
+    <string name="str_lbl_asset_name">资产</string>
     <string name="str_order_item_lbl_id">单号：</string>
     <string name="str_order_item_lbl_cont_in">送货人：</string>
     <string name="str_order_item_lbl_cont_out">接收人：</string>
@@ -180,11 +181,11 @@
     <string name="str_order_item_lbl_odate_out">出账日期：</string>
     <string name="str_order_item_lbl_odate_inv">盘点日期：</string>
     <string name="str_tip_save_record_msg">请先停止扫描</string>
-    <string name="str_rfid_binded">标签已绑定其他物资</string>
-    <string name="str_save_asset_rfid_invalid">标签ID无效，请先扫描物资标签</string>
-    <string name="str_save_asset_clsct_invalid">物资类别无效</string>
-    <string name="str_lbl_asset_sug_location">存放规定</string>
-    <string name="str_confirm_rfid_rebind">此标签已绑定其他物资，确认要绑定当前新物资吗？</string>
+    <string name="str_rfid_binded">标签已绑定其他资产</string>
+    <string name="str_save_asset_rfid_invalid">标签ID无效，请先扫描资产标签</string>
+    <string name="str_save_asset_clsct_invalid">资产类别无效</string>
+    <string name="str_lbl_asset_sug_location">办公室</string>
+    <string name="str_confirm_rfid_rebind">此标签已绑定其他资产，确认要绑定当前新资产吗？</string>
     <string name="str_rfid_not_valid_need_upload">需要上传数据后才能使用此标签</string>
     <string name="str_tip_no_records">暂无更多记录...</string>
     <string name="str_tip_load_order_list_complete">单据列表加载完成</string>
@@ -213,14 +214,14 @@
     <!--自定义数组-->
     <string-array name="downlitems">
         <item>基本信息</item>
-        <item>物资信息</item>
-        <item>物资分类</item>
+        <item>资产信息</item>
+        <item>资产分类</item>
         <item>办公室信息</item>
     </string-array>
     <string-array name="uplitems">
-        <item>物资入账信息</item>
-        <item>物资出账信息</item>
-        <item>物资盘点信息</item>
+        <item>资产入账信息</item>
+        <item>资产出账信息</item>
+        <item>资产盘点信息</item>
     </string-array>
 
     <string name="str_lbl_label_bending">单标签绑定</string>

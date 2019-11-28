@@ -73,6 +73,8 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr>
     private int power = 0;//rate of work
     private int area = 0;
     private AssetScanThread scanThread = null;
+
+    private String warehouse;
     /**
      * Handler分发Runnable对象的方式
      */
@@ -131,7 +133,10 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr>
         scanedAssets = new ArrayList<String>();
         bindedRFIDs = new ArrayList<Map<String, String>>();
         AddAssetContact.AddAssetPtr presenter = getPresenter();
-        getPresenter().initData(AddAssetPresenter.TYPE_INIT_DATA_ALL, "");
+
+        warehouse = getIntent().getStringExtra("warehouse");
+
+        getPresenter().initData(AddAssetPresenter.TYPE_INIT_DATA_ALL, "",warehouse);
         getPresenter().loadBindedRFIDs();
         setListeners();
     }
@@ -244,7 +249,7 @@ public class AddAssetActivity extends BaseActivity<AddAssetContact.AddAssetPtr>
         String key = map.get("id");
         String name = map.get("name");
         if (parent == spAssetClsFst) {
-            getPresenter().initData(AddAssetPresenter.TYPE_INIT_DATA_CLSSCD, key);
+            getPresenter().initData(AddAssetPresenter.TYPE_INIT_DATA_CLSSCD, key,warehouse);
         } else if (parent == spAssetClsScd) {
             record.setName(name);
             record.setClsct(key);

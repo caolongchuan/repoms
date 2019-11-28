@@ -50,7 +50,7 @@ public class OrderInvtModel implements OrderInvtContact.OrderInvtMdl{
     public void saveOrder(OrderInvtBean data, IConDbListener callback) {
         //1.校验信息
         if(data.getLocation().equals("")){
-            callback.onFailure(0, new BaseResultBean(100, "仓库信息无效"));
+            callback.onFailure(0, new BaseResultBean(100, "办公室信息无效"));
             return;
         }
         if(data.getUsermgr().equals("")){
@@ -58,7 +58,7 @@ public class OrderInvtModel implements OrderInvtContact.OrderInvtMdl{
             return;
         }
         if(data.getAssets() == null || data.getAssets().size() == 0){
-            callback.onFailure(0, new BaseResultBean(102, "入库物资信息无效"));
+            callback.onFailure(0, new BaseResultBean(102, "入账物资信息无效"));
             return;
         }
         Order_Invt record = new Order_Invt();

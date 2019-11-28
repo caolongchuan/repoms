@@ -6,6 +6,7 @@
     android:orientation="horizontal"
     android:padding="@dimen/item_padding_common"
     android:layout_gravity="center_horizontal"
+    android:id="@+id/ll_main"
     >
 
     <LinearLayout

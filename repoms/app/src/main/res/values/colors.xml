@@ -37,4 +37,8 @@
     <color name="alert_dialog_confirm_btn_right_color">#FFFFFF</color>
     <!-- 对话框的右侧按钮文字颜色 -->
     <color name="alert_dialog_confirm_btn_right_text_color">#000000</color>
+
+    <color name="no_haved_red_color">#FC7777</color>
+    <color name="haved_green_color">#08E734</color>
+    <color name="over_yellow">#EED979</color>
 </resources>

@@ -263,6 +263,7 @@ public class OrderInActivity extends BaseActivity<OrderInContact.OrderInPtr>
         String key=map.get("id");
         if(parent == spWarehouse){
             record.setLocation(key);
+            warehouse = key;
         }
         else if(parent == spFromUsers){
             record.setUsersend(key);

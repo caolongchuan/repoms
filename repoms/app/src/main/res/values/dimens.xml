@@ -50,6 +50,6 @@
     <dimen name="RoundedAmplitude">1dp</dimen>
 
     <!--RecyclerView高度-->
-    <dimen name="recyclerview_height">300dp</dimen>
-    <dimen name="invt_recyclerview_height">350dp</dimen>
+    <dimen name="recyclerview_height">350dp</dimen>
+    <dimen name="invt_recyclerview_height">380dp</dimen>
 </resources>

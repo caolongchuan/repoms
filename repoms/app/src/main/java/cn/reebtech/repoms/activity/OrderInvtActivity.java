@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -30,6 +31,8 @@ import com.android.hdhe.uhf.reader.UhfReader;
 import com.nlscan.android.uhf.TagInfo;
 import com.nlscan.android.uhf.UHFManager;
 import com.nlscan.android.uhf.UHFReader;
+
+import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,12 +47,15 @@ import cn.reebtech.repoms.RepomsAPP;
 import cn.reebtech.repoms.bean.AssetBean;
 import cn.reebtech.repoms.bean.OrderInvtBean;
 import cn.reebtech.repoms.contact.OrderInvtContact;
+import cn.reebtech.repoms.model.entity.Assets;
+import cn.reebtech.repoms.model.greendao.AssetsDao;
 import cn.reebtech.repoms.presenter.OrderInvtPresenter;
 import cn.reebtech.repoms.presenter.OrderListPresenter;
 import cn.reebtech.repoms.presenter.OrderReqPresenter;
 import cn.reebtech.repoms.Adapter.AssetListAdapter;
 import cn.reebtech.repoms.util.CommonUtils;
 import cn.reebtech.repoms.util.DBUtils;
+import cn.reebtech.repoms.util.GreenDaoManager;
 
 public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPtr> implements OrderInvtContact.OrderInvtUI,
         View.OnClickListener,
@@ -70,21 +76,27 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
     /*About Read EPC*/
     private final int MSG_FIND_ASSET = 0;
     private final int MSG_NOT_FIND_ASSET = 1;
-    private final int MSG_NOT_OPEN_COMMPORT=2;
+    private final int MSG_NOT_OPEN_COMMPORT = 2;
     private boolean runFlag = false;
     private boolean startFlag = false;
     private UhfReader manager; // UHF manager,UHF Operating handle
     public String epc = "";
     private SharedPreferences shared;
     private SharedPreferences.Editor editor;
-    private String[] powers = {"30dbm","26dbm","24dbm","20dbm","18dbm","17dbm","16dbm"};
-    private int power = 0 ;//rate of work
+    private String[] powers = {"30dbm", "26dbm", "24dbm", "20dbm", "18dbm", "17dbm", "16dbm"};
+    private int power = 0;//rate of work
     private int area = 0;
     private String warehouse = "";
+
+    private List<Assets> mAllAssets;
+    private TextView tvAllAssetsNum;
+    private int ScanedNum = 0;
+    private TextView tvScanedNum;
+    private ImageView ivOK;
     /**
      * Handler分发Runnable对象的方式
      */
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -93,7 +105,7 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
                     Bundle bundle = msg.getData();
                     getPresenter().loadAsset(bundle.getString("rfid"));
 
-                    Log.i("OrderInvtActivity",bundle.getString("rfid"));
+                    Log.i("OrderInvtActivity", bundle.getString("rfid"));
 
                     break;
                 case MSG_NOT_FIND_ASSET:
@@ -105,6 +117,7 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
             }
         }
     };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,8 +127,15 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
         initMT90();
 
         initView();
+
+        initData();
     }
-    private void initView(){
+
+    private void initData() {
+        mAllAssets = new ArrayList<>();
+    }
+
+    private void initView() {
         shared = getSharedPreferences("UhfRfPower", 0);
         editor = shared.edit();
         power = shared.getInt("power", 30);
@@ -133,11 +153,12 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
         btnAddAsset = (ImageButton) findViewById(R.id.btn_order_inv_add_asset);
         record = new OrderInvtBean();
         assetListCon = (RecyclerView) findViewById(R.id.ryc_order_inv);
+
         assetListCon.setLayoutManager(new LinearLayoutManager(this));
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL);
+        //添加Android自带的分割线
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         assetListCon.addItemDecoration(itemDecoration);
         rcyAdapter = new InvtAssetListAdapter(this);
-
         assetListCon.setItemAnimator(new DefaultItemAnimator());
         // 如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
         assetListCon.setHasFixedSize(true);
@@ -147,17 +168,21 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
         setListeners();
         getPresenter().initData();
         odate.setText(CommonUtils.parseDateToString(new Date()));
+
+        tvAllAssetsNum = findViewById(R.id.tv_total_num);
+        tvScanedNum = findViewById(R.id.tv_num);
+        ivOK = findViewById(R.id.iv_ok);
     }
-    private void setListeners(){
+
+    private void setListeners() {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.saveOk:
-                        if(startFlag){
+                        if (startFlag) {
                             showToast(getString(R.string.str_tip_save_record_msg));
-                        }
-                        else{
+                        } else {
                             getPresenter().saveOrder(record);
                             getPresenter().initData();
                         }
@@ -169,29 +194,33 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
                         break;
                 }
                 return true;
-            }});
+            }
+        });
         btnAddAsset.setOnClickListener(this);
         rcyAdapter.setOnItemClickListener(this);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
+
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
+        switch (v.getId()) {
             case R.id.btn_order_inv_add_asset:
                 //启用手持机扫描线程
                 startOrStopScan();
                 break;
         }
     }
+
     /*
      * 开启扫描线程
      * */
-    private void startOrStopScan(){
-        if(!runFlag){
+    private void startOrStopScan() {
+        if (!runFlag) {
             runFlag = true;
             Thread thread = new OrderInvtActivity.AssetScanThread();
             thread.start();
@@ -210,6 +239,7 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
             stopScan();
         }
     }
+
     @Override
     public OrderInvtContact.OrderInvtPtr onBindPresenter() {
         return new OrderInvtPresenter(this);
@@ -217,12 +247,32 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        HashMap<String,String> map=(HashMap<String,String>)parent.getItemAtPosition(position);
-        String key=map.get("id");
-        if(parent == spWarehouse){
+        HashMap<String, String> map = (HashMap<String, String>) parent.getItemAtPosition(position);
+        String key = map.get("id");
+        if (parent == spWarehouse) {
             record.setLocation(key);
-        }
-        else if(parent == spInvUsers){
+            if (record.getAssets() != null) {
+                record.getAssets().clear();
+            }
+            scanedAssets.clear();
+            mAllAssets.clear();
+            rcyAdapter.removeAll();
+            mAllAssets = getAssetsDao().queryBuilder().where(AssetsDao.Properties.Location.eq(key)).list();
+
+            tvAllAssetsNum.setText(mAllAssets.size() + "");
+            ScanedNum = 0;
+            tvScanedNum.setText(ScanedNum + "");
+            ivOK.setVisibility(View.INVISIBLE);
+
+
+            for (Assets assets : mAllAssets) {
+                Map<String, Object> item = new HashMap<String, Object>();
+                item.put("name", assets.getName());
+                item.put("asset_code", assets.getAsset_code());
+                item.put("have", 0);
+                rcyAdapter.addData(rcyAdapter.getItemCount(), item);
+            }
+        } else if (parent == spInvUsers) {
             record.setUsermgr(key);
         }
     }
@@ -240,10 +290,10 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
         record.getAssets().clear();
         scanedAssets.clear();
         rcyAdapter.removeAll();
-        if(user != null && !user.equals("")){
-            for(int i = 0; i < spInvUsers.getAdapter().getCount(); i++){
-                Map<String, String> item = (Map<String, String>)spInvUsers.getAdapter().getItem(i);
-                if(item.get("id").equals(user)){
+        if (user != null && !user.equals("")) {
+            for (int i = 0; i < spInvUsers.getAdapter().getCount(); i++) {
+                Map<String, String> item = (Map<String, String>) spInvUsers.getAdapter().getItem(i);
+                if (item.get("id").equals(user)) {
                     spInvUsers.setSelection(i);
                 }
             }
@@ -252,26 +302,26 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
 
     @Override
     public void fillSpinner(int type, List<Map<String, String>> data) {
-        switch(type){
+        switch (type) {
             case OrderReqPresenter.TYPE_LOAD_DATA_WAREHOUSE:
-                spWarehouse.setAdapter(new SimpleAdapter(this, data, R.layout.simple_spinner_item, new String[]{ "name", "id"}, new int[] {R.id.txt_spinner_item_name, R.id.txt_spinner_item_key}));
+                spWarehouse.setAdapter(new SimpleAdapter(this, data, R.layout.simple_spinner_item, new String[]{"name", "id"}, new int[]{R.id.txt_spinner_item_name, R.id.txt_spinner_item_key}));
                 spWarehouse.setOnItemSelectedListener(this);
                 warehouse = DBUtils.getBindWarehouse(user);
                 //showToast("warehouse:" + warehouse);
-                for(int i = 0; i < data.size(); i++){
-                    if(data.get(i).get("id").equals(warehouse)){
+                for (int i = 0; i < data.size(); i++) {
+                    if (data.get(i).get("id").equals(warehouse)) {
                         spWarehouse.setSelection(i);
                     }
                 }
                 break;
             case OrderReqPresenter.TYPE_LOAD_DATA_MGRS:
-                spInvUsers.setAdapter(new SimpleAdapter(this, data, R.layout.simple_spinner_item, new String[]{ "name", "id"}, new int[] {R.id.txt_spinner_item_name, R.id.txt_spinner_item_key}));
+                spInvUsers.setAdapter(new SimpleAdapter(this, data, R.layout.simple_spinner_item, new String[]{"name", "id"}, new int[]{R.id.txt_spinner_item_name, R.id.txt_spinner_item_key}));
                 spInvUsers.setOnItemSelectedListener(this);
                 String loginusr = RepomsAPP.getUser();
-                if(RepomsAPP.getUser() != null && !RepomsAPP.getUser().equals("")){
+                if (RepomsAPP.getUser() != null && !RepomsAPP.getUser().equals("")) {
                     for (int i = 0; i < data.size(); i++) {
                         Map<String, String> item = data.get(i);
-                        if(item != null && item.get("id").equals(RepomsAPP.getUser())){
+                        if (item != null && item.get("id").equals(RepomsAPP.getUser())) {
                             spInvUsers.setSelection(i);
                         }
                     }
@@ -283,17 +333,29 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
     @Override
     public void addScanedAsset(AssetBean data) {
         //加入到类表中
-        if(record.getAssets() == null){
+        if (record.getAssets() == null) {
             record.setAssets(new ArrayList<AssetBean>());
         }
-        if(data.getId() != null && !data.getId().equals("")){
+        if (data.getId() != null && !data.getId().equals("")) {
             record.getAssets().add(data);
+
+            for (Assets assets : mAllAssets) {
+                if (assets.getAsset_code().equals(data.getAsset_code())) {
+                    ScanedNum++;
+                    rcyAdapter.updateHaveByAssetCode(assets.getAsset_code(), 1);
+                    tvScanedNum.setText(ScanedNum + "");
+                    if (ScanedNum >= mAllAssets.size()) {
+                        ivOK.setVisibility(View.VISIBLE);
+                    }
+                    return;
+                }
+            }
             Map<String, Object> item = new HashMap<String, Object>();
-            item.put("num", record.getAssets().size());
             item.put("name", data.getName());
-            item.put("id", data.getId() + item.get("num"));
-            item.put("asset_code",data.getAsset_code());
+            item.put("asset_code", data.getAsset_code());
+            item.put("have", 3);
             rcyAdapter.addData(rcyAdapter.getItemCount(), item);
+
         }
     }
 
@@ -308,15 +370,17 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
     public boolean onLongClick(View parent, int position) {
         return false;
     }
+
     @Override
-    public void showToast(String msg){
+    public void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
+
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         manager = UhfReader.getInstance();
-        if(manager == null){
+        if (manager == null) {
             Log.i("openComFailed", "Open ComPort Failed");
             return;
         }
@@ -325,21 +389,23 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if(manager != null){
+        if (manager != null) {
             manager.setOutputPower(power);
             manager.setWorkArea(area);
         }
     }
+
     @Override
-    protected void onPause(){
+    protected void onPause() {
         startFlag = false;
         if (manager != null) {
             manager.close();
         }
         super.onPause();
     }
+
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         startFlag = false;
         runFlag = false;
         if (manager != null) {
@@ -351,25 +417,31 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
         super.onDestroy();
     }
 
+    private AssetsDao getAssetsDao() {
+        return GreenDaoManager.getInstance().getSession().getAssetsDao();
+    }
+
+
     /**
      * 扫描线程
      */
     class AssetScanThread extends Thread {
         private List<byte[]> epcList;
         byte[] accessPassword = Tools.HexString2Bytes("00000000");
+
         @Override
         public void run() {
             super.run();
             while (runFlag) {
                 if (startFlag) {
-                    if(manager!=null){
+                    if (manager != null) {
                         // manager.stopInventoryMulti()
                         epcList = manager.inventoryRealTime(); // inventory real time
                         if (epcList != null && !epcList.isEmpty()) {
                             for (byte[] epc : epcList) {
-                                if(epc != null && epc.length > 0) {
+                                if (epc != null && epc.length > 0) {
                                     String epcStr = Tools.Bytes2HexString(epc, epc.length);
-                                    if(!scanedAssets.contains(epcStr)){
+                                    if (!scanedAssets.contains(epcStr)) {
                                         scanedAssets.add(epcStr);
                                         Message message = new Message();
                                         message.what = MSG_FIND_ASSET;
@@ -386,15 +458,13 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
                     }
                     epcList = null;
                 }
-                try{
+                try {
                     Thread.sleep(50);
+                } catch (Exception e) {
                 }
-                catch(Exception e){}
             }
         }
     }
-
-
 
 
     private UHFManager mUHFMgr;
@@ -402,23 +472,21 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
     private BroadcastReceiver mResultReceiver = new BroadcastReceiver() {
 
         @Override
-        public void onReceive(Context context, Intent intent)
-        {
+        public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if(!"nlscan.intent.action.uhf.ACTION_RESULT".equals(action))
-                return ;
+            if (!"nlscan.intent.action.uhf.ACTION_RESULT".equals(action))
+                return;
             //标签数据数组
-            Parcelable[] tagInfos =  intent.getParcelableArrayExtra("tag_info");
+            Parcelable[] tagInfos = intent.getParcelableArrayExtra("tag_info");
             //本次盘点启动的时间
             long startReading = intent.getLongExtra("extra_start_reading_time", 0l);
             //......
-            for(Parcelable parcel : tagInfos)
-            {
-                TagInfo tagInfo = (TagInfo)parcel;
-                String epcStr = UHFReader. bytes_Hexstr(tagInfo. EpcId);
-                Log.d("TAG","Epc ID : "+ epcStr);
+            for (Parcelable parcel : tagInfos) {
+                TagInfo tagInfo = (TagInfo) parcel;
+                String epcStr = UHFReader.bytes_Hexstr(tagInfo.EpcId);
+                Log.d("TAG", "Epc ID : " + epcStr);
 
-                if(!scanedAssets.contains(epcStr)){
+                if (!scanedAssets.contains(epcStr)) {
                     scanedAssets.add(epcStr);
                     Message message = new Message();
                     message.what = MSG_FIND_ASSET;
@@ -431,27 +499,30 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
             }
         }//end onReceiver
     };
+
     /**
      * clc启动扫描
      */
-    private void startScan(){
+    private void startScan() {
         //----启动盘点
         UHFReader.READER_STATE er = mUHFMgr.startTagInventory();
-        if( er == UHFReader.READER_STATE. OK_ERR){
-            Log.d("TAG","MT90手持机盘点启动成功");
-        }else{
-            Log.d("TAG","MT90手持机盘点启动失败");
+        if (er == UHFReader.READER_STATE.OK_ERR) {
+            Log.d("TAG", "MT90手持机盘点启动成功");
+        } else {
+            Log.d("TAG", "MT90手持机盘点启动失败");
         }
     }
-    private void stopScan(){
+
+    private void stopScan() {
         //----停止盘点
         UHFReader.READER_STATE er = mUHFMgr.stopTagInventory();
-        if( er == UHFReader.READER_STATE. OK_ERR){
-            Log.d("TAG","MT90手持机盘点停止成功");
-        }else{
-            Log.d("TAG","MT90手持机盘点停止成功");
+        if (er == UHFReader.READER_STATE.OK_ERR) {
+            Log.d("TAG", "MT90手持机盘点停止成功");
+        } else {
+            Log.d("TAG", "MT90手持机盘点停止成功");
         }
     }
+
     /**
      * clc添加
      */
@@ -461,7 +532,6 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
         IntentFilter iFilter = new IntentFilter("nlscan.intent.action.uhf.ACTION_RESULT");
         registerReceiver(mResultReceiver, iFilter);
     }
-
 
 
 }

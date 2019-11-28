@@ -29,13 +29,15 @@ import cn.reebtech.repoms.util.IConDbListener;
 
 public class AddAssetModel extends BaseDBModel<AssetClsct, String, IConDbListener<Integer, AssetBean, BaseResultBean>> implements AddAssetContact.AddAssetMdl {
     @Override
-    public void loadAssetClsFst(IConDbListener callback) {
+    public void loadAssetClsFst(String warehouse, IConDbListener callback) {
         AssetClsctDao table = getAssetClsDao();
         try{
             List<AssetClsct> records = table.queryBuilder()
-                    .where(AssetClsctDao.Properties.Parent.eq("0"))
+                    .where(AssetClsctDao.Properties.Parent.eq("0"), AssetClsctDao.Properties.Location.eq(warehouse))
                     .orderAsc(AssetClsctDao.Properties.Name)
                     .list();
+//                    .where(AssetClsctDao.Properties.Parent.eq("0"))
+
             List<Map<String, String>> data = new ArrayList<Map<String, String>>();
             for (AssetClsct record: records) {
                 Map<String, String> item = new HashMap<String, String>();
