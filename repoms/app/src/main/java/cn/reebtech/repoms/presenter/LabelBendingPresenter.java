@@ -19,7 +19,8 @@ public class LabelBendingPresenter extends BasePresenter<LabelBendingContact.Lab
     public static final int TYPE_INIT_DATA_CLSSCD = 3;
     public static final int TYPE_LOGIN_SERVER = 5;
     public static final int ERROR_CODE_LOAD_CLSFST_FAILED = 101;
-
+    public static final int TYPE_INIT_DATA_BGS = 7;
+    public static final int ERROR_CODE_LOAD_BGS_FAILED = 102;
 
 
     public LabelBendingPresenter(@NonNull LabelBendingContact.LabelBendingUI view) {
@@ -34,12 +35,15 @@ public class LabelBendingPresenter extends BasePresenter<LabelBendingContact.Lab
 
     @Override
     public void initData(int type, String parent) {
-        switch(type){
+        switch (type) {
+            case TYPE_INIT_DATA_BGS:
+                break;
             case TYPE_INIT_DATA_ALL:
-                mLadelBendingMdl.loadAssetClsFst(this);
+//                mLadelBendingMdl.loadAssetClsFst(this);
+                mLadelBendingMdl.loadBGS(this);
                 break;
             case TYPE_INIT_DATA_CLSFST:
-                mLadelBendingMdl.loadAssetClsFst(this);
+                mLadelBendingMdl.loadAssetClsFst(this,parent);
                 break;
             case TYPE_INIT_DATA_CLSSCD:
                 mLadelBendingMdl.loadAssetClsScd(parent, this);
@@ -48,7 +52,7 @@ public class LabelBendingPresenter extends BasePresenter<LabelBendingContact.Lab
     }
 
     @Override
-    public void saveOrder(LabelBendingBean data)  {
+    public void saveOrder(LabelBendingBean data) {
         mLadelBendingMdl.saveOrder(data, this);
     }
 
@@ -64,12 +68,15 @@ public class LabelBendingPresenter extends BasePresenter<LabelBendingContact.Lab
 
     @Override
     public void onSuccess(Integer source, Object data, BaseResultBean result) {
-        switch(source.intValue()){
+        switch (source.intValue()) {
+            case TYPE_INIT_DATA_BGS:
+                getView().fillSpinner(TYPE_INIT_DATA_BGS, (List<Map<String, String>>) data);
+                break;
             case TYPE_INIT_DATA_CLSFST:
-                getView().fillSpinner(TYPE_INIT_DATA_CLSFST, (List<Map<String, String>>)data);
+                getView().fillSpinner(TYPE_INIT_DATA_CLSFST, (List<Map<String, String>>) data);
                 break;
             case TYPE_INIT_DATA_CLSSCD:
-                getView().fillSpinner(TYPE_INIT_DATA_CLSSCD, (List<Map<String, String>>)data);
+                getView().fillSpinner(TYPE_INIT_DATA_CLSSCD, (List<Map<String, String>>) data);
                 break;
             case TYPE_LOGIN_SERVER:
                 getView().showToast("登录服务器成功，开始下载未绑定标签物资");

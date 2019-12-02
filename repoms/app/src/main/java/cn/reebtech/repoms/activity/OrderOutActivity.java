@@ -81,6 +81,8 @@ public class OrderOutActivity extends BaseActivity<OrderOutContact.OrderOutPtr> 
     private int power = 0 ;//rate of work
     private int area = 0;
     private String warehouse = "";
+
+    private String bgs = "";
     /**
      * Handler分发Runnable对象的方式
      */
@@ -240,7 +242,7 @@ public class OrderOutActivity extends BaseActivity<OrderOutContact.OrderOutPtr> 
         if(record.getAssets() == null){
             record.setAssets(new ArrayList<AssetBean>());
         }
-        if(data.getId() != null && !data.getId().equals("")){
+        if(data.getId() != null && !data.getId().equals("")&&(data.getLocation().equals(bgs))){
             record.getAssets().add(data);
             Map<String, Object> item = new HashMap<String, Object>();
             item.put("num", record.getAssets().size());
@@ -290,6 +292,9 @@ public class OrderOutActivity extends BaseActivity<OrderOutContact.OrderOutPtr> 
         String key=map.get("id");
         if(parent == spWarehouse){
             record.setLocation(key);
+            bgs = key;
+            scanedAssets.clear();
+            rcyAdapter.removeAll();
         }
         else if(parent == spRecUsers){
             record.setUserrec(key);

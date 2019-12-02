@@ -81,6 +81,7 @@ public class OrderInModel implements OrderInContact.OrderInMdl {
                 ritem.setCompleted(true);
                 ritem.setUploaded(false);
                 ritem.setAsset_code(item.getAsset_code());//clc资产编码
+                ritem.setCzl(item.getCzl());
                 records.add(ritem);
                 ctable.save(ritem);
                 //4. 更新物资库中有相同rfid记录的rfid字段未空
@@ -195,7 +196,6 @@ public class OrderInModel implements OrderInContact.OrderInMdl {
         }
         return result;
     }
-
 
     /*获取各种Table引用*/
     private UserDao getUserDao(){

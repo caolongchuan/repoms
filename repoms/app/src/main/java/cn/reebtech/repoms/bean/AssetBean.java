@@ -18,6 +18,7 @@ public class AssetBean implements Serializable {
     private String rfid;
     private String remark;
     private String asset_code;  //clc资产编码
+    private String czl;     //残值率
 
     public String getId() {
         return id;
@@ -121,5 +122,13 @@ public class AssetBean implements Serializable {
 
     public void setAsset_code(String asset_code) {
         this.asset_code = asset_code;
+    }
+
+    public String getCzl() {
+        return czl;
+    }
+
+    public void setCzl(String czl) {
+        this.czl = czl;
     }
 }

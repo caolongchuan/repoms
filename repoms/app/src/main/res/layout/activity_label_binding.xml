@@ -18,7 +18,7 @@
         app:navigationIcon="@drawable/icon_menu_return_32"
         app:theme="@style/AppTheme" />
     <LinearLayout
-        android:id="@+id/lyt_line_1"
+        android:id="@+id/lyt_line_11"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/item_margin_common"
@@ -26,6 +26,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tb_asset_add"
+        android:background="@drawable/linelyt_border"
+        >
+        <TextView
+            android:id="@+id/textView41"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="@string/str_title_assets_bgs"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textSize="16sp"/>
+
+        <Spinner
+            android:id="@+id/sp_assets_bgs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/item_margin_common"
+            android:layout_weight="6"
+            android:prompt="@string/str_title_prompt_asset_clsfst"
+            android:spinnerMode="dialog" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lyt_line_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/item_margin_common"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lyt_line_11"
         android:background="@drawable/linelyt_border"
         >
         <TextView

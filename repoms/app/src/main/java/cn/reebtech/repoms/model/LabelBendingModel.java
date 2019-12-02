@@ -85,13 +85,32 @@ public class LabelBendingModel extends BaseDBModel<AssetClsct, String, IConDbLis
     }
 */
 
+    @Override
+    public void loadBGS(IConDbListener callback){
+        WareHouseDao wareHouseDao = getWareHouseDao();
+        try{
+            List<WareHouse> records = wareHouseDao.queryBuilder().list();
+            List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+            for (WareHouse record: records) {
+                Map<String, String> item = new HashMap<String, String>();
+                item.put("id", record.getId());
+                item.put("name", record.getName());
+                data.add(item);
+            }
+            callback.onSuccess(LabelBendingPresenter.TYPE_INIT_DATA_BGS, data, new BaseResultBean(0, ""));
+        }
+        catch(Exception e){
+            callback.onFailure(LabelBendingPresenter.TYPE_INIT_DATA_BGS, new BaseResultBean(LabelBendingPresenter.ERROR_CODE_LOAD_BGS_FAILED, e.getMessage()));
+        }
+
+    }
 
     @Override
-    public void loadAssetClsFst(IConDbListener callback) {
+    public void loadAssetClsFst(IConDbListener callback,String gbs_key) {
         AssetClsctDao table = getAssetClsDao();
         try{
             List<AssetClsct> records = table.queryBuilder()
-                    .where(AssetClsctDao.Properties.Parent.eq("0"))
+                    .where(AssetClsctDao.Properties.Parent.eq("0"),AssetClsctDao.Properties.Location.eq(gbs_key))
                     .orderAsc(AssetClsctDao.Properties.Name)
                     .list();
             List<Map<String, String>> data = new ArrayList<Map<String, String>>();

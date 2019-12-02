@@ -253,6 +253,7 @@
             android:textStyle="bold"/>
 
         <EditText
+            android:hint="请输入0-100之间的数字"
             android:id="@+id/txt_asset_czl"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -262,6 +263,11 @@
             android:background="@drawable/linelyt_border_blue"
             android:layout_marginLeft="@dimen/item_margin_common"
             android:inputType="textPersonName"/>
+        <TextView
+            android:text="%"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

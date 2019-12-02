@@ -257,13 +257,12 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
             scanedAssets.clear();
             mAllAssets.clear();
             rcyAdapter.removeAll();
-            mAllAssets = getAssetsDao().queryBuilder().where(AssetsDao.Properties.Location.eq(key)).list();
+            mAllAssets = getAssetsDao().queryBuilder().where(AssetsDao.Properties.Location.eq(key),AssetsDao.Properties.Status.eq(1)).list();
 
             tvAllAssetsNum.setText(mAllAssets.size() + "");
             ScanedNum = 0;
             tvScanedNum.setText(ScanedNum + "");
             ivOK.setVisibility(View.INVISIBLE);
-
 
             for (Assets assets : mAllAssets) {
                 Map<String, Object> item = new HashMap<String, Object>();
@@ -354,6 +353,7 @@ public class OrderInvtActivity extends BaseActivity<OrderInvtContact.OrderInvtPt
             item.put("name", data.getName());
             item.put("asset_code", data.getAsset_code());
             item.put("have", 3);
+            item.put("bgs",data.getLocation());
             rcyAdapter.addData(rcyAdapter.getItemCount(), item);
 
         }

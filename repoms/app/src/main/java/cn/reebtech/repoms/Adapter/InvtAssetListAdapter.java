@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Map;
 
 import cn.reebtech.repoms.R;
+import cn.reebtech.repoms.model.entity.WareHouse;
+import cn.reebtech.repoms.model.greendao.WareHouseDao;
+import cn.reebtech.repoms.util.GreenDaoManager;
 
 public class InvtAssetListAdapter extends RecyclerView.Adapter<InvtAssetListAdapter.ViewHolder> {
     private Context mContext;
@@ -62,6 +65,12 @@ public class InvtAssetListAdapter extends RecyclerView.Adapter<InvtAssetListAdap
             holder.llMain.setBackgroundColor(mContext.getResources().getColor(R.color.haved_green_color));
         } else if(have ==3){
             holder.llMain.setBackgroundColor(mContext.getResources().getColor(R.color.over_yellow));
+
+            WareHouseDao table = getWareHouseDao();
+            WareHouse records = table.queryBuilder()
+                    .where(WareHouseDao.Properties.Id.eq(item.get("bgs")))
+                    .unique();
+            holder.assetName.setText(item.get("name") + "---" + records.getName());
         }
         // 点击事件注册及分发
         if (null != mOnItemClickListener) {
@@ -198,6 +207,10 @@ public class InvtAssetListAdapter extends RecyclerView.Adapter<InvtAssetListAdap
             assetTrush.setImageResource(R.mipmap.icon_have);
             assetTrush.setVisibility(View.INVISIBLE);
         }
+    }
+
+    private WareHouseDao getWareHouseDao(){
+        return GreenDaoManager.getInstance().getSession().getWareHouseDao();
     }
 
 

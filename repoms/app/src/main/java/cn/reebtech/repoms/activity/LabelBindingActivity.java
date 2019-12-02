@@ -90,6 +90,7 @@ public class LabelBindingActivity extends BaseActivity<LabelBendingContact.Label
     private static final int MSG_SCAN_RFID = 1;
     private static final int MSG_CHOCE_RFID = 2;
     private Toolbar toolbar;
+    private Spinner spBGS;//办公室
     private Spinner spAssetClsFst;
     private Spinner spAssetClsScd;
     private TextView tv_rfid;
@@ -103,7 +104,7 @@ public class LabelBindingActivity extends BaseActivity<LabelBendingContact.Label
     private boolean runFlag = false;
     private boolean startFlag = false;
 
-    private String currentClsName;
+    private String currentClsName = "";
 
     private List<AssetClsct> asset_clsct_list;
     private List<Assets> all_asset_list;
@@ -113,6 +114,7 @@ public class LabelBindingActivity extends BaseActivity<LabelBendingContact.Label
 
     private ApiService apiService;
 
+    private String cut_bgs="";
 
     /**
      * Handler分发Runnable对象的方式
@@ -299,7 +301,9 @@ public class LabelBindingActivity extends BaseActivity<LabelBendingContact.Label
         rfid_bending = new ArrayList<>();
         asset_list = new ArrayList<>();
         AssetsDao tb_asset = getAssetDao();
-        all_asset_list = tb_asset.queryBuilder().list();
+        all_asset_list = tb_asset.queryBuilder()
+                .where(AssetsDao.Properties.Status.eq(1))
+                .list();
         for (Assets a : all_asset_list) {
             if (a.getRfid().equals("")) {
                 asset_list.add(a);
@@ -320,6 +324,7 @@ public class LabelBindingActivity extends BaseActivity<LabelBendingContact.Label
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.setTitle(getResources().getString(R.string.str_lbl_label_bending));
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        spBGS =  findViewById(R.id.sp_assets_bgs);//办公室
         spAssetClsFst = findViewById(R.id.sp_assets_clsfst);
         spAssetClsScd = findViewById(R.id.sp_assets_clsscd);
         tv_rfid = findViewById(R.id.txt_rfid);
@@ -331,7 +336,7 @@ public class LabelBindingActivity extends BaseActivity<LabelBendingContact.Label
         record.setId(String.valueOf(System.currentTimeMillis()));
         assetListCon = (RecyclerView) findViewById(R.id.ryc_order_inv);
         assetListCon.setLayoutManager(new LinearLayoutManager(this));
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL);
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         assetListCon.addItemDecoration(itemDecoration);
         rcyAdapter = new BindAssetListAdapter(this, this);
         assetListCon.setItemAnimator(new DefaultItemAnimator());
@@ -436,13 +441,12 @@ public class LabelBindingActivity extends BaseActivity<LabelBendingContact.Label
             record.setClsct(key);
             //根据小类存放位置信息更新显示存放规定
             getPresenter().loadSugLocation(key);
-        }
-
-        for (AssetClsct ac : asset_clsct_list) {
-            if (ac.getName().equals(name)) {
-                currentClsName = ac.getId();
-                break;
-            }
+            currentClsName = key;
+        } else if(parent == spBGS){
+//            getPresenter().initData(LabelBendingPresenter.TYPE_INIT_DATA_BGS,key);
+            cut_bgs = key;
+            Toast.makeText(this,name,Toast.LENGTH_SHORT).show();
+            getPresenter().initData(LabelBendingPresenter.TYPE_INIT_DATA_CLSFST, key);
         }
 
         rcyAdapter.removeAll();
@@ -486,6 +490,10 @@ public class LabelBindingActivity extends BaseActivity<LabelBendingContact.Label
             case AddAssetPresenter.TYPE_INIT_DATA_CLSSCD:
                 spAssetClsScd.setAdapter(new SimpleAdapter(this, data, R.layout.simple_spinner_item, new String[]{"name", "id"}, new int[]{R.id.txt_spinner_item_name, R.id.txt_spinner_item_key}));
                 spAssetClsScd.setOnItemSelectedListener(this);
+                break;
+            case AddAssetPresenter.TYPE_INIT_DATA_BGS:
+                spBGS.setAdapter(new SimpleAdapter(this, data, R.layout.simple_spinner_item, new String[]{"name", "id"}, new int[]{R.id.txt_spinner_item_name, R.id.txt_spinner_item_key}));
+                spBGS.setOnItemSelectedListener(this);
                 break;
         }
     }

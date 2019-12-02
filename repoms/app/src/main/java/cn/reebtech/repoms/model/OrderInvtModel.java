@@ -146,7 +146,9 @@ public class OrderInvtModel implements OrderInvtContact.OrderInvtMdl{
     @Override
     public void loadAsset(String rfid, IConDbListener callback) {
         AssetBean result = null;
-        Assets record = getAssetsDao().queryBuilder().where(AssetsDao.Properties.Rfid.eq(rfid)).unique();
+        Assets record = getAssetsDao().queryBuilder()
+                .where(AssetsDao.Properties.Rfid.eq(rfid),AssetsDao.Properties.Status.eq(1))
+                .unique();
         if(record != null){
             result = new AssetBean();
             result.setId(record.getId());

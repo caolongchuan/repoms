@@ -27,6 +27,8 @@ public class ScanModel implements ScanContact.ScanMdl {
             result.setClsct(record.getClsct());
             result.setLocation(getLocation(record.getLocation()));
             result.setRfid(rfid);
+            result.setPrice(record.getPrice());
+            result.setManut(record.getManut());
             callback.onSuccess(ScanPresenter.TYPE_LOAD_ASSET, result, new BaseResultBean(0, ""));
         }
         else{

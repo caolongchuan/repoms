@@ -35,6 +35,7 @@ import com.nlscan.android.uhf.UHFReader;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,6 +81,8 @@ public class AddAssetsActivity extends BaseActivity<AddAssetsContact.AddAssetsPt
     private EditText mManut;
     private EditText mPrice;
     private EditText mCZL;
+
+    private int asset_code_ = 0;
     /**
      * Handler分发Runnable对象的方式
      */
@@ -157,12 +160,15 @@ public class AddAssetsActivity extends BaseActivity<AddAssetsContact.AddAssetsPt
                     case R.id.saveOk:
                         boolean b = false;
                         try {
-                            Double.parseDouble(mPrice.getText().toString());
+                            if (!mPrice.getText().toString().equals(""))
+                                Double.parseDouble(mPrice.getText().toString());
+                            if (!mCZL.getText().toString().equals(""))
+                                Integer.parseInt(mCZL.getText().toString());
                             b = true;
                         } catch (NumberFormatException ignored) {
                         }
                         if (!b) {
-                            Toast.makeText(AddAssetsActivity.this, "请输入正确的价格，如1.00", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddAssetsActivity.this, "请检查数据格式是否正确", Toast.LENGTH_SHORT).show();
                             break;
                         }
                         if (startFlag) {
@@ -188,11 +194,26 @@ public class AddAssetsActivity extends BaseActivity<AddAssetsContact.AddAssetsPt
                             item.setClsct(record.getClsct());
                             item.setName(record.getName());
                             item.setLocation(record.getLocation());
-                            item.setPrice(Double.valueOf(mPrice.getText().toString()));
-                            item.setManut(mManut.getText().toString());
+                            if(mPrice.getText().toString().equals("")){
+                                item.setPrice(0);
+                            }else{
+                                item.setPrice(Double.valueOf(mPrice.getText().toString()));
+                            }
+                            String manut = mManut.getText().toString();
+                            if (manut.equals("")) {
+                                item.setManut("0");
+                            } else {
+                                item.setManut(mManut.getText().toString());
+                            }
                             item.setSpecification("");
                             item.setRfid(rfid);
                             item.setAsset_code(GenerateAssetCode(null, rfid)); //clc设置资产编码////////////////////////////////////////////////////////////////////
+                            String czl = mCZL.getText().toString();
+                            if (czl.equals("")) {
+                                item.setCzl("0");
+                            } else {
+                                item.setCzl(czl);
+                            }
                             records.add(item);
                         }
                         bundle.putSerializable("assets", (Serializable) records);
@@ -460,7 +481,10 @@ public class AddAssetsActivity extends BaseActivity<AddAssetsContact.AddAssetsPt
      * @return
      */
     private String GenerateAssetCode(String cls, String rfid) {
-        return "asset_code" + rfid;
+        long date = new Date().getTime();
+        String s = String.valueOf(date+asset_code_ );
+        asset_code_++;
+        return "asset_code" + s;
     }
 
 

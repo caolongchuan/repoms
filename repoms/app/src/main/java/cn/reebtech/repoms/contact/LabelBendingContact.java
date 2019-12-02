@@ -35,7 +35,8 @@ public final class LabelBendingContact {
      * model 层接口
      */
     public interface LabelBendingMdl {
-        void loadAssetClsFst(IConDbListener callback);
+        void loadBGS(IConDbListener callback);
+        void loadAssetClsFst(IConDbListener callback,String bgs_key);
         void loadAssetClsScd(String parent, IConDbListener callback);
         void loadSugLocation(String clssscd, IConDbListener callback);
 

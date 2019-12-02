@@ -33,11 +33,12 @@ public class Order_In_Detail {
     private int count;
     private String remark;
     private String asset_code;  //资产编码
+    private String czl;//残值率
 
-    @Generated(hash = 1185063414)
+    @Generated(hash = 1194645511)
     public Order_In_Detail(Long id, @NotNull String order, @NotNull String asset, @NotNull String name,
             @NotNull String clsct, String specification, String manut, double price, String location, String rfid,
-            boolean completed, boolean uploaded, int count, String remark, String asset_code) {
+            boolean completed, boolean uploaded, int count, String remark, String asset_code, String czl) {
         this.id = id;
         this.order = order;
         this.asset = asset;
@@ -53,6 +54,7 @@ public class Order_In_Detail {
         this.count = count;
         this.remark = remark;
         this.asset_code = asset_code;
+        this.czl = czl;
     }
 
     @Generated(hash = 1683712341)
@@ -177,5 +179,13 @@ public class Order_In_Detail {
 
     public void setAsset_code(String asset_code) {
         this.asset_code = asset_code;
+    }
+
+    public String getCzl() {
+        return czl;
+    }
+
+    public void setCzl(String czl) {
+        this.czl = czl;
     }
 }

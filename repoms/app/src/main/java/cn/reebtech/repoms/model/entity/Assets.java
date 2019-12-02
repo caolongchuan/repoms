@@ -33,11 +33,12 @@ public class Assets {
     private String rfid;
     private String remark;
     private String asset_code;      //clc 资产编码
-    @Generated(hash = 941929805)
-    public Assets(Long pid, @NotNull String id, @NotNull String name,
-            @NotNull String clsct, String specification, String manut, double price,
-            Date indate, Date lastupdate, String status, boolean inbound,
-            String location, String rfid, String remark, String asset_code) {
+    private String czl;             //残值率
+    @Generated(hash = 1616661787)
+    public Assets(Long pid, @NotNull String id, @NotNull String name, @NotNull String clsct,
+            String specification, String manut, double price, Date indate, Date lastupdate,
+            String status, boolean inbound, String location, String rfid, String remark,
+            String asset_code, String czl) {
         this.pid = pid;
         this.id = id;
         this.name = name;
@@ -53,11 +54,13 @@ public class Assets {
         this.rfid = rfid;
         this.remark = remark;
         this.asset_code = asset_code;
+        this.czl = czl;
     }
-@Generated(hash = 1373698660)
-public Assets() {
-}
-public Long getPid() {
+    @Generated(hash = 1373698660)
+    public Assets() {
+    }
+
+    public Long getPid() {
     return this.pid;
 }
 public void setPid(Long pid) {
@@ -148,5 +151,13 @@ public void setRemark(String remark) {
 
     public void setAsset_code(String asset_code) {
         this.asset_code = asset_code;
+    }
+
+    public String getCzl() {
+        return czl;
+    }
+
+    public void setCzl(String czl) {
+        this.czl = czl;
     }
 }

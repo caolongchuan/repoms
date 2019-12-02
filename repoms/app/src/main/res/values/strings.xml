@@ -141,6 +141,7 @@
     <string name="str_lbl_asset_invt">盘点人</string>
     <string name="str_lbl_asset_order_date">日期</string>
     <string name="str_title_assets_list">资产列表</string>
+    <string name="str_title_assets_bgs">办公室</string>
     <string name="str_title_asset_clsfst">资产大类</string>
     <string name="str_title_asset_clsscd">资产小类</string>
     <string name="str_title_asset_location">办公室</string>

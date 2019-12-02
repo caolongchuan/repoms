@@ -70,6 +70,7 @@ public class DataSyncUtils {
 
                         record.setAsset_code(item.isNull("assetCode") ? "" : item.get("assetCode").toString());//clc 资产编码
 
+                        record.setCzl(item.isNull("ervr") ? "" : item.get("ervr").toString());
                         tb_asset.save(record);
                     }
                     Log.i("物资信息", "保存成功");
@@ -192,6 +193,7 @@ public class DataSyncUtils {
                             subitem.put("remark", "");
 
                             subitem.put("asset_code",order_item.getAsset_code());//clc 资产编码
+                            subitem.put("ervr",order_item.getCzl());//残值率
 
                             subitems.put(subitem);
                         }
