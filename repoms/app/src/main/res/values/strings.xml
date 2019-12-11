@@ -228,4 +228,9 @@
     <string name="str_lbl_label_bending">单标签绑定</string>
     <string name="str_search_hine">请输入资产编码</string>
     <string name="str_lbl_rfid">RFID</string>
+    <string name="str_menu_icon_allocate">资产调拨</string>
+    <string name="str_yuanlai_bgs">办公室</string>
+    <string name="str_xianzai_bgs">新办公室</string>
+    <string name="str_new_user">使用人</string>
+    <string name="str_new_uesr_edit">请输入新的使用人姓名</string>
 </resources>

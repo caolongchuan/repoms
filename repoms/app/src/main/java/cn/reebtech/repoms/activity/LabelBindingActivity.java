@@ -110,6 +110,8 @@ public class LabelBindingActivity extends BaseActivity<LabelBendingContact.Label
     private List<Assets> all_asset_list;
     private List<Assets> asset_list;
 
+    private List<Assets> asset_list1;
+
     private List<String> rfid_bending;
 
     private ApiService apiService;
@@ -442,24 +444,25 @@ public class LabelBindingActivity extends BaseActivity<LabelBendingContact.Label
             //根据小类存放位置信息更新显示存放规定
             getPresenter().loadSugLocation(key);
             currentClsName = key;
+
+            rcyAdapter.removeAll();
+
+            for (Assets a : asset_list) {
+                if (currentClsName.equals(a.getClsct())) {
+                    Map<String, Object> item = new HashMap<String, Object>();
+                    item.put("name", a.getName());
+                    item.put("id", a.getId() + item.get("num"));
+                    item.put("asset_code", a.getAsset_code());
+                    item.put("clsct", a.getClsct());
+                    rcyAdapter.addData(rcyAdapter.getItemCount(), item);
+                }
+            }
+
         } else if(parent == spBGS){
 //            getPresenter().initData(LabelBendingPresenter.TYPE_INIT_DATA_BGS,key);
             cut_bgs = key;
             Toast.makeText(this,name,Toast.LENGTH_SHORT).show();
             getPresenter().initData(LabelBendingPresenter.TYPE_INIT_DATA_CLSFST, key);
-        }
-
-        rcyAdapter.removeAll();
-
-        for (Assets a : asset_list) {
-            if (currentClsName.equals(a.getClsct())) {
-                Map<String, Object> item = new HashMap<String, Object>();
-                item.put("name", a.getName());
-                item.put("id", a.getId() + item.get("num"));
-                item.put("asset_code", a.getAsset_code());
-                item.put("clsct", a.getClsct());
-                rcyAdapter.addData(rcyAdapter.getItemCount(), item);
-            }
         }
 
 

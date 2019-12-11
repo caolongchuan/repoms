@@ -22,6 +22,7 @@ public class Contacts {
     //clc添加 只获取未绑定标签的物资数据
     public static final String ON_RFID_ASSEET_URL = "/manageplatform/handset/material/getAllOrRFID";
     public static final String UPDATA_NORFID_ASSET_URL = "/manageplatform/handset/material/bdbq";
+    public static final String UPDATA_ALLOCATE_ASSET_URL = "/manageplatform/handset/material/allocation";
 
     public static final String GLOBAL_TOKEN = "token";
 

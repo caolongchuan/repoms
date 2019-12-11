@@ -60,6 +60,9 @@ public interface ApiService {
     @POST(Contacts.UPDATA_NORFID_ASSET_URL)
     Observable<String> featchUpdataRfidAssets(@Header("accessToken") String token, @Body RequestBody data);
 
+    @POST(Contacts.UPDATA_ALLOCATE_ASSET_URL)
+    Observable<String> featchAllocateAssets(@Header("accessToken") String token, @Body RequestBody data);
+
     @Streaming
     @GET
     Call<ResponseBody> downloadFile(@Url String fileUrl);

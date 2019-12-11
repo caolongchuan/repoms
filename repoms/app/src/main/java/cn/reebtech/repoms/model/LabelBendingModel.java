@@ -34,56 +34,8 @@ import io.reactivex.schedulers.Schedulers;
 public class LabelBendingModel extends BaseDBModel<AssetClsct, String, IConDbListener<Integer, AssetBean, BaseResultBean>>
         implements LabelBendingContact.LabelBendingMdl  {
 
-    private ApiService apiService;
-    private String token;
-    private DataSyncUtils dataSyncUtils;
-
     public LabelBendingModel(LabelBendingContact.LabelBendingUI view){
-        apiService = RetrofitClient.getInstance((Activity)view).provideApiService();
-        dataSyncUtils = new DataSyncUtils();
-
     }
-
-/*
-    public void loginServer(final int type, final IConDbListener callback) {
-        LoginBean loginBean = DBUtils.getServerLogin();
-        if(loginBean.getUsrname() == null || loginBean.getUsrname().equals("") || loginBean.getPasswd() == null || loginBean.getPasswd().equals("")) {
-            callback.onFailure(LabelBendingPresenter.TYPE_LOGIN_SERVER, new BaseResultBean(103, "服务器配置信息无效，请重新配置"));
-            return;
-        }
-        apiService.login(loginBean.getUsrname(), loginBean.getPasswd())
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<LoginResult>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-                    @Override
-                    public void onNext(LoginResult respResult) {
-                        if(respResult.getCode() == 200){
-                            token = respResult.getResult();
-                            Log.i("Token", token);
-                            callback.onSuccess(LabelBendingPresenter.TYPE_LOGIN_SERVER, type, new BaseResultBean(0, ""));
-                        }
-                        else{
-                            callback.onFailure(type, new BaseResultBean(101, "用户名或密码无效"));
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        callback.onFailure(type, new BaseResultBean(102, "连接服务器失败：" + e.getMessage()));
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Log.i("complete", "complete");
-                    }
-                });
-    }
-*/
 
     @Override
     public void loadBGS(IConDbListener callback){

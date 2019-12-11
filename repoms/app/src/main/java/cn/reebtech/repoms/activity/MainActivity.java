@@ -1,6 +1,5 @@
 package cn.reebtech.repoms.activity;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -54,13 +53,15 @@ public class MainActivity extends BaseActivity<MainContact.MainPtr> implements M
                 R.drawable.icon_menu_order_req,R.drawable.icon_menu_order_in,
                 R.drawable.icon_menu_inv, R.drawable.icon_menu_scan_32 ,
                 R.drawable.icon_menu_sync,R.drawable.icon_menu_label_binding,
-                R.drawable.icon_menu_logout };
+                R.drawable.icon_menu_allocate,R.drawable.icon_menu_logout };
         //图标下的文字
         String name[]={getString(R.string.str_menu_order_out),
                 getString(R.string.str_menu_order_ret), getString(R.string.str_menu_order_req),
                 getString(R.string.str_menu_order_in), getString(R.string.str_menu_inv),
                 getString(R.string.str_menu_read_rfid), getString(R.string.str_menu_data_sync),
-                getString(R.string.str_menu_label_binding), getString(R.string.str_menu_logout)};
+                getString(R.string.str_menu_label_binding),
+                getString(R.string.str_menu_icon_allocate),
+                getString(R.string.str_menu_logout)};
         menuList = new ArrayList<Map<String, Object>>();
         for (int i = 0; i <icon.length; i++) {
             Map<String, Object> map=new HashMap<String, Object>();
@@ -107,7 +108,7 @@ public class MainActivity extends BaseActivity<MainContact.MainPtr> implements M
                         starterOrderInvt.putExtra("user", user);
                         startActivity(starterOrderInvt);
                         break;
-                    case 5:
+                    case 5://物资识别
                         Intent starterScan = new Intent(MainActivity.this, ScanActivity.class);
                         startActivity(starterScan);
                         break;
@@ -120,7 +121,12 @@ public class MainActivity extends BaseActivity<MainContact.MainPtr> implements M
                         labelBinding.putExtra("user", user);
                         startActivity(labelBinding);
                         break;
-                    case 8: //注销
+                    case 8://资产调拨
+                        Intent allocate = new Intent(MainActivity.this,AllocateActivity.class);
+                        allocate.putExtra("user",user);
+                        startActivity(allocate);
+                        break;
+                    case 9: //注销
                         new AlertDialog.Builder(MainActivity.this).setTitle(getString(R.string.str_title_confirm_dialog_logout))
                                 .setIcon(android.R.drawable.ic_dialog_info)
                                 .setPositiveButton(getString(R.string.str_title_confirm_btn_ok), new DialogInterface.OnClickListener() {
@@ -139,7 +145,7 @@ public class MainActivity extends BaseActivity<MainContact.MainPtr> implements M
                                     }
                                 }).show();
                         break;
-                    case 9: //临时初始化数据用
+                    case 10: //临时初始化数据用
                         //getPresenter().tmpInitData(1);
                         //getPresenter().tmpInitData(2);
                         //getPresenter().tmpInitData(3);

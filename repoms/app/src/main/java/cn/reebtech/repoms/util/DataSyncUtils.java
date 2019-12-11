@@ -48,8 +48,8 @@ public class DataSyncUtils {
                     AssetsDao tb_asset = getAssetDao();
                     if(items.length() > 0){
                         //清空数据
-                        tb_asset.deleteAll();
                     }
+                    tb_asset.deleteAll();
                     int length = items.length();
                     for(int i = 0; i < items.length(); i++){
                         JSONObject item = (JSONObject) items.get(i);
@@ -70,7 +70,9 @@ public class DataSyncUtils {
 
                         record.setAsset_code(item.isNull("assetCode") ? "" : item.get("assetCode").toString());//clc 资产编码
 
-                        record.setCzl(item.isNull("ervr") ? "" : item.get("ervr").toString());
+                        record.setCzl(item.isNull("ervr") ? "" : item.get("ervr").toString());//残值率
+                        record.setUser(item.isNull("employUser")?"":item.get("employUser").toString());//使用人
+                        record.setWarranty_period(item.isNull("warrantyPeriod")?"":item.get("warrantyPeriod").toString());//质保期
                         tb_asset.save(record);
                     }
                     Log.i("物资信息", "保存成功");

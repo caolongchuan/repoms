@@ -40,6 +40,8 @@ public class AssetsDao extends AbstractDao<Assets, Long> {
         public final static Property Remark = new Property(13, String.class, "remark", false, "REMARK");
         public final static Property Asset_code = new Property(14, String.class, "asset_code", false, "ASSET_CODE");
         public final static Property Czl = new Property(15, String.class, "czl", false, "CZL");
+        public final static Property User = new Property(16, String.class, "user", false, "USER");
+        public final static Property Warranty_period = new Property(17, String.class, "warranty_period", false, "WARRANTY_PERIOD");
     }
 
 
@@ -70,7 +72,9 @@ public class AssetsDao extends AbstractDao<Assets, Long> {
                 "\"RFID\" TEXT," + // 12: rfid
                 "\"REMARK\" TEXT," + // 13: remark
                 "\"ASSET_CODE\" TEXT," + // 14: asset_code
-                "\"CZL\" TEXT);"); // 15: czl
+                "\"CZL\" TEXT," + // 15: czl
+                "\"USER\" TEXT," + // 16: user
+                "\"WARRANTY_PERIOD\" TEXT);"); // 17: warranty_period
         // Add Indexes
         db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_ASSETS_ID ON \"ASSETS\"" +
                 " (\"ID\" ASC);");
@@ -147,6 +151,16 @@ public class AssetsDao extends AbstractDao<Assets, Long> {
         if (czl != null) {
             stmt.bindString(16, czl);
         }
+ 
+        String user = entity.getUser();
+        if (user != null) {
+            stmt.bindString(17, user);
+        }
+ 
+        String warranty_period = entity.getWarranty_period();
+        if (warranty_period != null) {
+            stmt.bindString(18, warranty_period);
+        }
     }
 
     @Override
@@ -212,6 +226,16 @@ public class AssetsDao extends AbstractDao<Assets, Long> {
         if (czl != null) {
             stmt.bindString(16, czl);
         }
+ 
+        String user = entity.getUser();
+        if (user != null) {
+            stmt.bindString(17, user);
+        }
+ 
+        String warranty_period = entity.getWarranty_period();
+        if (warranty_period != null) {
+            stmt.bindString(18, warranty_period);
+        }
     }
 
     @Override
@@ -237,7 +261,9 @@ public class AssetsDao extends AbstractDao<Assets, Long> {
             cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // rfid
             cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // remark
             cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14), // asset_code
-            cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15) // czl
+            cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15), // czl
+            cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16), // user
+            cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17) // warranty_period
         );
         return entity;
     }
@@ -260,6 +286,8 @@ public class AssetsDao extends AbstractDao<Assets, Long> {
         entity.setRemark(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
         entity.setAsset_code(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
         entity.setCzl(cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15));
+        entity.setUser(cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16));
+        entity.setWarranty_period(cursor.isNull(offset + 17) ? null : cursor.getString(offset + 17));
      }
     
     @Override
